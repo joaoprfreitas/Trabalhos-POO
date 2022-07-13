@@ -33,3 +33,32 @@ class Estoque():
         id = id + 1
         self.products.append(Item(name, id, price, store))
 
+
+    def create(self):
+        layout = [
+            [sg.Text("O que você deseja cadastrar")],
+            [sg.Button(button_text='Alimentos', key='food'), sg.Button('Sessões', key='sessions')],
+
+        ]
+        window = sg.Window('Tela de cadastro', layout,size=(1080, 1080), location=(0,0))
+        while True:
+            event, values = window.read()
+            print(values)
+            if event == sg.WIN_CLOSED or event == 'Close':
+                break
+            if event == 'food':
+                window.close()
+                layout = self.getLayout()
+                window = sg.Window('Tela de cadastro', layout,size=(1080, 1080), location=(0,0))
+            if event == 'create':
+                try:
+                    name = values[0]
+                    price = values[1]
+                    store = values[2]
+                
+                    self.addFood(name, float(price), int(store))
+                    sg.Popup("Produto cadastro com sucesso")
+                except Exception as error:
+                    sg.PopupError(error.args)
+
+
