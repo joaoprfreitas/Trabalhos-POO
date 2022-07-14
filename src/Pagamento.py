@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 from Util import *
 import re
 
-class TelaPagamento():
+class PaymentScreen():
     def __init__(self):
         'Define o layout da página de pagamentos'
 
@@ -83,7 +83,7 @@ class TelaPagamento():
 
         return True
 
-    def iniciarPagamento(self):
+    def createScreen(self):
         'Inicia a tela de pagamento, retornando True se o pagamento for realizado com sucesso'
         'ou False se o usuário cancelar o pagamento'
 
@@ -96,5 +96,5 @@ class TelaPagamento():
                     return True
 
 if __name__ == '__main__':
-    pagamento = TelaPagamento()
-    pagamento.iniciarPagamento()
+    pScreen = PaymentScreen()
+    pScreen.createScreen()
