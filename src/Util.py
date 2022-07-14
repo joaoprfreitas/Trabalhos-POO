@@ -6,7 +6,16 @@ class Util:
 
     @staticmethod
     def getFont():
-        return 'Arial'
+        return ('Arial', 12)
+
+    def getFontPlaceholder():
+        return ('Arial', 10, 'italic')
+
+    def fontColor():
+        return '#000814'
+
+    def fontBackgroundColor():
+        return '#b0aac2'
     
     @staticmethod
     def screenSize():
