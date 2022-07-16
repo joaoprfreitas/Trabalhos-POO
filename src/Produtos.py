@@ -1,4 +1,3 @@
-from curses import window
 import PySimpleGUI as sg
 from Util import *
  

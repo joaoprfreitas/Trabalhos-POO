@@ -90,7 +90,7 @@ class PaymentScreen():
         while True:
             self.button, self.values = self.screen.read()
             if self.button == sg.WIN_CLOSED:
-                return False
+                return None
             elif self.button == 'Pagar':
                 if self.validateFields():
                     return True

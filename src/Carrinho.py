@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 import PySimpleGUI as sg
 from Util import *
 
@@ -58,8 +57,8 @@ class Carrinho():
         return self.totalValue
 
     def createScreen(self):
-        'Inicia a tela de carrinho, retornando True se o usuário confirmar,'
-        ' False se o usuário cancelar o pagamento e None se o usuário encerrar o programa'
+        'Inicia a tela de carrinho, retornando True se o usuário confirmar, '
+        'False se o usuário cancelar o pagamento e None se o usuário encerrar o programa'
 
         while True:
             self.button, self.values = self.screen.read()
@@ -75,7 +74,9 @@ if __name__ == '__main__':
              ["Produto 2", 20.00, 1],
              ["Produto 3", 30.00, 3],
              ["Produto 4", 40.00, 4],
-             ["Produto 5", 50.00, 5]]
+             ["Produto 5", 50.00, 5],
+             ["Produto 6", 60.00, 6],
+             ["Produto 7", 70.00, 7]]
     carrinho = Carrinho(lista)
     carrinho.cartLayout()
     retorno = carrinho.createScreen()

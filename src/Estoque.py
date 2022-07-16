@@ -3,6 +3,7 @@ from requests import Session
 from Item import *
 from Sessoes import *
 from Util import *
+
 class Estoque():
 
     products = []
