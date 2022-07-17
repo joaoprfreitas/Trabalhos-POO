@@ -97,8 +97,10 @@ class PaymentScreen():
                 return None
             elif self.button == 'Pagar':
                 if self.validateFields():
+                    self.screen.close()
                     return True
             elif self.button == 'Voltar':
+                self.screen.close()
                 return False
 
 if __name__ == '__main__':

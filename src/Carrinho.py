@@ -83,8 +83,10 @@ class Carrinho():
             if self.button == sg.WIN_CLOSED:
                 return None
             elif self.button == 'Confirmar':
+                self.screen.close()
                 return True
             elif self.button == 'Voltar':
+                self.screen.close()
                 return False
 
 if __name__ == '__main__':
