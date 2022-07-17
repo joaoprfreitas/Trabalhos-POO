@@ -54,14 +54,16 @@ class Estoque():
         id = self.getLastId()
         id = id + 1
         self.products.append(Sessoes(name, id, price, dateTime, type, image))
-    def create(self):
+
+    
+    def createScreen(self):
         layout = [
-            [sg.Text("O que você deseja cadastrar?", size=(30,2), background_color='#b0aac2', text_color='#000814',auto_size_text=True, justification='center', font=(Util.getFont(), 20))],
+            [sg.Text("O que você deseja cadastrar?", size=(30,2), background_color='#b0aac2', text_color='#000814',auto_size_text=True, justification='center', font=Util.getTitleFont())],
             [sg.Button(button_text='Alimentos', key='food', button_color=['#000', '#3478C1']), sg.Button(button_text='Sessões',button_color=['#000', '#3478C1'], key='sessions')],
 
         ]
         sg.theme(Util.theme())
-        window = sg.Window('Tela de cadastro', layout,size=(1080, 1080), location=(0,0), element_justification='c')
+        window = sg.Window('Tela de cadastro', layout,size=Util.screenSize(), element_justification='c', font=Util.getFont())
         isFood = False
         while True:
             event, values = window.read()
@@ -71,12 +73,12 @@ class Estoque():
                 isFood = True
                 window.close()
                 layout = self.getLayoutFood()
-                window = sg.Window('Tela de cadastro', layout,size=(1080, 1080), location=(0,0), element_justification='c')
+                window = sg.Window('Tela de cadastro', layout,size=Util.screenSize(), element_justification='c')
             elif event == 'sessions':
                 isFood = False
                 window.close()
                 layout = self.getLayoutSession()
-                window = sg.Window('Tela de cadastro', layout,size=(1080, 1080), location=(0,0), element_justification='c')
+                window = sg.Window('Tela de cadastro', layout,size=Util.screenSize(), element_justification='c')
             elif event == 'create':
                 try:
                     if values['name'] == "":
@@ -165,3 +167,6 @@ class Estoque():
                     sg.PopupError(error.args)
             
 
+if __name__ == '__main__':
+    estoque = Estoque()
+    estoque.createScreen()
