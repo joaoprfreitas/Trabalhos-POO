@@ -23,7 +23,7 @@ class Item():
     def getPrice(self):
         return self.price
 
-    def getStock(self):
+    def getAmount(self):
         return self.store
 
     def getImagePath(self):

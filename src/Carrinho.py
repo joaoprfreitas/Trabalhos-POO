@@ -1,5 +1,6 @@
 import PySimpleGUI as sg
 from Util import *
+from Item import *
 
 class Carrinho():
     'Classe do tipo carrinho'
@@ -29,19 +30,20 @@ class Carrinho():
         # Lista de produtos
         whiteBackground = True
         for product in self.productList:
-            backgroundColor = '#ffffff'
-            if not whiteBackground: backgroundColor = Util.fontBackgroundColor()
+            if isinstance(product, Item):
+                backgroundColor = '#ffffff'
+                if not whiteBackground: backgroundColor = Util.fontBackgroundColor()
 
-            whiteBackground = not whiteBackground
+                whiteBackground = not whiteBackground
 
-            subTotal = product[1] * product[2]
-            self.layout.append([sg.Text(product[0], font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor()),
-                                sg.Text(str(product[1]), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor()),
-                                sg.Text(str(product[2]), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor()),
-                                sg.Text(str(subTotal), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor())
-                                ])
+                subTotal = product.getPrice() * product.getAmount()
+                self.layout.append([sg.Text(product.getName(), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor()),
+                                    sg.Text(str(product.getPrice()), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor()),
+                                    sg.Text(str(product.getAmount()), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor()),
+                                    sg.Text(str(subTotal), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor())
+                                    ])
 
-            self.totalValue += subTotal
+                self.totalValue += subTotal
 
         # Total
         self.layout.append([sg.Text('Total:', font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
