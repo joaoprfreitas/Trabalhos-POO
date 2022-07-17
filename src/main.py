@@ -20,7 +20,7 @@ class Flags(Enum):
 
 
 if __name__ == '__main__':
-    screen = Flags.CART
+    screen = Flags.HOME
     totalValue = 0
     userInfos = None
 
