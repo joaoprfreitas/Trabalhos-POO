@@ -29,8 +29,9 @@ class PaymentScreen():
 
             [sg.Checkbox('Estou ciente e aceito os termos de Uso.', key='accepted', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())],
 
-            [sg.Button('Pagar', size=(10, 1), font=Util.getFont())]
+            [sg.Button('Voltar', size=(10, 1), font=Util.getFont()), sg.Button('Pagar', size=(10, 1), font=Util.getFont())]
         ]
+
         sg.theme(Util.theme())
         self.screen = sg.Window('Pagamento', self.layout, size=Util.screenSize(), element_justification='center')
 
@@ -83,9 +84,12 @@ class PaymentScreen():
 
         return True
 
+    def getInfos(self):
+        'Retorna as informações do pagamento'
+        return self.values
+
     def createScreen(self):
-        'Inicia a tela de pagamento, retornando True se o pagamento for realizado com sucesso'
-        'ou False se o usuário cancelar o pagamento'
+        'Inicia a tela de pagamento, retornando True se o pagamento for realizado com sucesso ou False se o usuário cancelar o pagamento'
 
         while True:
             self.button, self.values = self.screen.read()
@@ -94,6 +98,8 @@ class PaymentScreen():
             elif self.button == 'Pagar':
                 if self.validateFields():
                     return True
+            elif self.button == 'Voltar':
+                return False
 
 if __name__ == '__main__':
     pScreen = PaymentScreen()

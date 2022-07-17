@@ -1,4 +1,5 @@
 from Item import *
+
 class Sessoes(Item):
     def __init__(self, name: str, id: int, price:float, dateTime:str, type:str, imagePath:str, store=1):
         super().__init__(name, id, price, store,imagePath)

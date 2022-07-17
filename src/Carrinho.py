@@ -2,6 +2,8 @@ import PySimpleGUI as sg
 from Util import *
 
 class Carrinho():
+    'Classe do tipo carrinho'
+
     def __init__(self, productList):
         'Construtor do carrinho'
 
@@ -10,6 +12,7 @@ class Carrinho():
 
 
     def cartLayout(self):
+        'Cria o layout do carrinho'
         self.layout = []
 
         # Cabeçalho
@@ -23,6 +26,7 @@ class Carrinho():
                             ])
 
         
+        # Lista de produtos
         whiteBackground = True
         for product in self.productList:
             backgroundColor = '#ffffff'
@@ -39,10 +43,12 @@ class Carrinho():
 
             self.totalValue += subTotal
 
+        # Total
         self.layout.append([sg.Text('Total:', font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
                             sg.Text(str(self.totalValue), font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())
                             ])
 
+        # Botões
         self.layout.append([sg.Button('Voltar', size=(10, 1), font=Util.getFont()),
                             sg.Button('Confirmar', size=(10, 1), font=Util.getFont())
                             ])

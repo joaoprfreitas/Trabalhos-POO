@@ -1,12 +1,80 @@
-import PySimpleGUI as sg
 from Estoque import *
+from enum import Enum
+from Inicial import *
+from Carrinho import *
+from Pagamento import *
 
-flags = [{0: "HOME", 1: "ESTOQUE", 2: "CARRINHO", 3: "PEDIDOS", 4: "USUARIO"}]
+class Flags(Enum):
+    HOME = 0
+    MOVIES = 1
+    PRODUCTS = 2
+    CART = 3
+    PAYMENT = 4
+    QRCODE = 5
+
+    ADMIN = 6
+    ADMIN_MOVIES = 7
+    ADMIN_PRODUCTS = 8
+
+    FINISH = 9
 
 
+if __name__ == '__main__':
+    screen = Flags.HOME
+    totalValue = 0
+    userInfos = None
 
+    while True:
+        if screen is Flags.HOME:
+            homeScreen = Inicial()
+            next = homeScreen.TelaInicial()
 
-#### Tela de cadastro #####
-estoque = Estoque()
+            screen = Flags.FINISH if next is None else Flags.MOVIES
 
-estoque.create()
+        elif screen is Flags.MOVIES:
+            print("MOVIES")
+
+        elif screen is Flags.PRODUCTS:
+            print("PRODUCTS")
+            
+        elif screen is Flags.CART:
+            # PRECISA DE UMA LISTA DO ITENS
+            cartScreen = Carrinho(lista)
+            cartScreen.cartLayout()
+            next = carrinho.createScreen()
+
+            if next is None:
+                screen = Flags.FINISH
+            elif next is False:
+                screen = Flags.PRODUCTS
+            else:
+                screen = Flags.PAYMENT
+                totalValue = cartScreen.getTotalValue()
+            
+        elif screen is Flags.PAYMENT:
+            pScreen = PaymentScreen(totalValue)
+            next = pScreen.paymentScreen()
+
+            if next is None:
+                screen = Flags.FINISH
+            elif next is False:
+                screen = Flags.CART
+            else:
+                screen = Flags.QRCODE
+                userInfos = pScreen.getInfos()
+            
+        elif screen is Flags.QRCODE:
+            print("QRCODE")
+            
+        elif screen is Flags.ADMIN:
+            print("ADMIN")
+            
+        elif screen is Flags.ADMIN_MOVIES:
+            print("ADMIN_MOVIES")
+
+        elif screen is Flags.ADMIN_PRODUCTS:
+            print("ADMIN_PRODUCTS")
+
+        elif screen is Flags.FINISH:
+            break
+

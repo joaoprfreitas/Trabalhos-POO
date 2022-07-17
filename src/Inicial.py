@@ -1,4 +1,3 @@
-from curses import window
 import PySimpleGUI as sg
 from Util import *
  
@@ -18,8 +17,10 @@ class Inicial():
     def TelaInicial(self):    
         while True:
             eventos, valores = self.tela.read()
-            if eventos == sg.WINDOW.CLOSED:
-                break
+            if eventos == sg.WIN_CLOSED:
+                return None
+            elif eventos == 'Proximo':
+                return True
             
 if __name__ == '__main__':
     ini = Inicial()
