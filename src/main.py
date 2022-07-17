@@ -24,6 +24,9 @@ if __name__ == '__main__':
     totalValue = 0
     userInfos = None
 
+    stock = Estoque()
+    cart = Carrinho()
+
     while True:
         if screen is Flags.HOME:
             homeScreen = Inicial()
@@ -38,10 +41,8 @@ if __name__ == '__main__':
             print("PRODUCTS")
             
         elif screen is Flags.CART:
-            # PRECISA DE UMA LISTA DO ITENS
-            cartScreen = Carrinho(lista)
-            cartScreen.cartLayout()
-            next = carrinho.createScreen()
+            cart.cartLayout()
+            next = cart.createScreen()
 
             if next is None:
                 screen = Flags.FINISH
@@ -49,7 +50,7 @@ if __name__ == '__main__':
                 screen = Flags.PRODUCTS
             else:
                 screen = Flags.PAYMENT
-                totalValue = cartScreen.getTotalValue()
+                totalValue = cart.getTotalValue()
             
         elif screen is Flags.PAYMENT:
             pScreen = PaymentScreen(totalValue)

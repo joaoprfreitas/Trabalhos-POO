@@ -5,12 +5,11 @@ from Item import *
 class Carrinho():
     'Classe do tipo carrinho'
 
-    def __init__(self, productList):
+    def __init__(self):
         'Construtor do carrinho'
 
-        self.productList = productList
+        self.productList = []
         self.totalValue = 0
-
 
     def cartLayout(self):
         'Cria o layout do carrinho'
@@ -59,6 +58,17 @@ class Carrinho():
         self.screen = sg.Window('Carrinho', self.layout, size=Util.screenSize(), element_justification='center')
 
 
+    def addProduct(self, product : Item):
+        'Adiciona um produto ao carrinho'
+
+        if not isinstance(product, Item):
+            raise TypeError('O produto deve ser do tipo Item')
+
+        self.productList.append(product)
+
+    def getProductList(self):
+        'Retorna a lista de produtos do carrinho'
+        return self.productList
 
     def getTotalValue(self):
         'Retorna o valor total do carrinho'
