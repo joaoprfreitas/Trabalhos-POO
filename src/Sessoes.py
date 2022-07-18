@@ -1,6 +1,7 @@
 from Item import *
 from Cadeiras import *
 from Estoque import *
+from Carrinho import *
 
 class Sessoes(Item):
     def __init__(self, name: str, id: int, price:float, dateTime:str, type:str, imagePath:str, store=1):
@@ -20,24 +21,26 @@ class Sessoes(Item):
             [sg.Text("\n", font = Util.getFont)],
         ]
 
-        for product in productList:
-            if isinstance(product, Item):
-                self.layoutSessoes.append([sg.Text(product.getName(), font = Util.getFont), sg.Input(key=product.getId(), size=(10, 1))])
+        for movie in productList:
+            if isinstance(movie, Item):
+                self.movieAdd = movie
+                self.layoutSessoes.append([sg.Text(movie.getName(), font = Util.getFont), sg.Input(key=movie.getId(), size=(10, 1))])
+                self.layoutSessoes.append([sg.Button("Adicionar", key = 'add', font=Util.getFont)])
 
         self.layoutSessoes.append([sg.Text("\n", font = Util.getFont)])
-        self.layoutSessoes.append([sg.Text("SubTotal", size=(15,1), key = 'sub', font=Util.getFont), sg.Text(size=(15,1), key='_OUT_')])
         self.layoutSessoes.append([sg.Button("PRÓXIMO", key='PRÓXIMO', font=Util.getFont)])        
 
     def telaSessoes(self):  
-        self.tela = sg.Window('Produtos', self.layoutSessoes, size=Util.screenSize(), element_justification='center') 
+        self.tela = sg.Window('Sessões Disponíveis', self.layoutSessoes, size=Util.screenSize(), element_justification='center') 
 
         subT = 0
         while True:      
             event, values = self.tela.read()
             
             if event == sg.WINDOW_CLOSED:
-                self.semEstoque()
                 return None
+            if event == "Adicionar":
+                Carrinho.addProduct(self.movieAdd)
             if event == 'PRÓXIMO':
                 #fechar janela     
                 self.tela.close()
