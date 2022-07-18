@@ -1,67 +1,107 @@
 import PySimpleGUI as sg
 from Util import *
+from Item import *
+from Estoque import *
  
 class Produtos():  
-    def __init__(self):
+    def __init__(self, productList):
         sg.theme(Util.theme())
-
-        produtos = [
+        
+        self.layoutProdutos = [
             [sg.Text("Produtos disponíveis", font=('Arial', 15, 'bold'))],
             
             [sg.Text("\n", font = Util.getFont)],
-
-            [sg.Text("Coca-Cola - 750ml - R$7,00\n", size=(50,1), font=Util.getFont), sg.InputText(key='0', size=(1,1)), sg.Button("Adicionar", key = 'coca7')],
-            
-            [sg.Text("Coca-Cola - 350ml - R$5,00\n", size=(50,1), font=Util.getFont), sg.InputText(key='1', size=(1,1)), sg.Button("Adicionar", key='coca5')],
-            [sg.Text("Sprite - 350ml - R$4,00\n", size=(50,1), font=Util.getFont), sg.InputText(key='2', size=(1,1)), sg.Button("Adicionar", key='sp4')],
-            [sg.Text("Pipoca Média - R$10,00\n", size=(50,1), font=Util.getFont), sg.InputText(key='3', size=(1,1)), sg.Button("Adicionar", key='pm10')],
-            [sg.Text("Pipoca Grande - R$14,00\n", size=(50,1), font=Util.getFont), sg.InputText(key='4', size=(1,1)), sg.Button("Adicionar", key='pg14')],
-            [sg.Text("Douritos 190g - R$10,00\n", size=(50,1), font=Util.getFont), sg.InputText(key='5', size=(1,1)), sg.Button("Adicionar", key='d10')],
-            [sg.Text("Ruffles  185g - R$9,00\n", size=(50,1), key = 'ruf', font=Util.getFont), sg.InputText(key='6', size=(1,1)), sg.Button("Adicionar", key='r9')],            
-            [sg.Text("\n", font = Util.getFont)],
-
-            [sg.Text("SubTotal", size=(15,1), key = 'sub', font=Util.getFont), sg.Text(size=(15,1), key='_OUT_')],            
-            [sg.Button('PRÓXIMO')]
         ]
 
-        self.tela = sg.Window('Produtos', produtos, size=Util.screenSize(), element_justification='center') 
-    def TelaProdutos(self):  
+        for product in productList:
+            if isinstance(product, Item):
+                self.layoutProdutos.append([sg.Text(product.getName(), font = Util.getFont), sg.Input(key=product.getId(), size=(10, 1))])
+
+        self.layoutProdutos.append(sg.Text("\n", font = Util.getFont))
+        self.layoutProdutos.append(sg.Text("SubTotal", size=(15,1), key = 'sub', font=Util.getFont), sg.Text(size=(15,1), key='_OUT_'))
+        self.layoutProdutos.append(sg.Button("PRÓXIMO", key='PRÓXIMO', font=Util.getFont))        
+
+    def semEstoque(self):
+        self.semEstoque = [
+            [sg.Text("Produto em falta!\n", font = Util.getFont)]
+        ]
+        self.outEstoque = sg.Window("Erro", self.semEstoque, size=Util.screenSize(), element_justification='center' )
+
+    def telaProdutos(self):  
+        self.tela = sg.Window('Produtos', self.layoutProdutos, size=Util.screenSize(), element_justification='center') 
+
         subT = 0
         while True:      
             event, values = self.tela.read()
             
             if event == sg.WINDOW_CLOSED:
-                break
+                self.semEstoque()
+                return None
+            if event == 'PRÓXIMO':
+                #fechar janela     
+                self.tela.close()
+                return True
             if event == 'coca7':
-                n = int(values['0'])
-                subT = (subT + 7)*n
-                self.tela['_OUT_'].update(subT)
+                for i in Estoque.products:
+                    if i.getId == '0':
+                        n = int(values['0'])
+                        subT = (subT + 7)*n
+                        self.tela['_OUT_'].update(subT)
+                    else:
+                        #Produto em falta
+                        break
             if event == 'coca5':
-                n = int(values['1'])
-                subT = (subT + 5)*n
-                self.tela['_OUT_'].update(subT)
+                for i in Estoque.products:
+                    if i.getId == '1':
+                        n = int(values['1'])
+                        subT = (subT + 5)*n
+                        self.tela['_OUT_'].update(subT)
+                    else:
+                        #Produto em falta
+                        break
             if event == 'sp4':
-                n = int(values['2'])
-                subT = (subT + 4)*n
-                self.tela['_OUT_'].update(subT)                                
+                for i in Estoque.products:
+                    if i.getId == '2':
+                        n = int(values['2'])
+                        subT = (subT + 4)*n
+                        self.tela['_OUT_'].update(subT)   
+                    else:
+                        #Produto em falta
+                        break                             
             if event == 'pm10':
-                n = int(values['3'])
-                subT = (subT + 10)*n
-                self.tela['_OUT_'].update(subT)
+                for i in Estoque.products:
+                    if i.getId == '3':    
+                        n = int(values['3'])
+                        subT = (subT + 10)*n
+                        self.tela['_OUT_'].update(subT)
+                    else:
+                        break
             if event == 'pg14':
-                n = int(values['4'])
-                subT = (subT + 14)*n
-                self.tela['_OUT_'].update(subT)
+                for i in Estoque.products:
+                    if i.getId == '4':
+                        n = int(values['4'])
+                        subT = (subT + 14)*n
+                        self.tela['_OUT_'].update(subT)
+                    else:
+                        break
             if event == 'd10':
-                n = int(values['5'])
-                subT = (subT + 10)*n
-                self.tela['_OUT_'].update(subT)
+                for i in Estoque.products:
+                    if i.getId == '5':
+                        n = int(values['5'])
+                        subT = (subT + 10)*n
+                        self.tela['_OUT_'].update(subT)
+                    else:
+                        break
             if event == 'r9':
-                n = int(values['6'])
-                subT = (subT + 9)*n
-                self.tela['_OUT_'].update(subT)
-            
+                for i in Estoque.products:
+                    if i.getId == '6':        
+                        n = int(values['6'])
+                        subT = (subT + 9)*n
+                        self.tela['_OUT_'].update(subT)
+                    else:
+                        break
 if __name__ == '__main__':
     ini = Produtos()
-    ini.TelaProdutos()
+    ini.telaProdutos()
+
     

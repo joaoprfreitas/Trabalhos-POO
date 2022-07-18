@@ -1,5 +1,4 @@
 import PySimpleGUI as sg
-from requests import Session
 from Item import *
 from Sessoes import *
 from Util import *
@@ -8,9 +7,8 @@ class Estoque():
 
     products = []
 
-    
     def searchProduct(self, id:int):
-        if  type(id) != 'int':
+        if  type(id) != int:
             raise Exception("Id must be integer")
         item = filter(lambda p: p.id == id, self.products)
         return item
@@ -21,6 +19,7 @@ class Estoque():
             return 0
         item = self.products[size -1]
         return item.id
+
     def getLayoutFood(self):
         sg.theme(Util.theme())
         layout = [
@@ -29,9 +28,10 @@ class Estoque():
             [sg.Text('Preço', size =(15, 1)), sg.InputText(key='price')],
             [sg.Text('Estoque', size =(15, 1)), sg.InputText( key='store')],
             [sg.Text('Imagem',size=(15,1)), sg.Input(key='image',size=(35,1)), sg.FileBrowse(file_types=[("Image files", "*.png *.jpeg")], key="-IN-")],
-            [sg.Button("Cadastrar", key='create'), sg.Button("Parar de cadastrar", key='endCreate')]
+            [sg.Button("Cadastrar", key='create'), sg.Button("Parar de cadastrar", key='endCreate'), sg.Button("Voltar", key='returnHome')]
         ]
         return layout
+
     def getLayoutSession(self):
         sg.theme(Util.theme())
         layout = [
@@ -40,11 +40,12 @@ class Estoque():
             [sg.Text('Preço', size =(15, 1)), sg.InputText(key='price')],
             [sg.Text('Tipo', size=(15,1)), sg.Listbox(values=['Dublado', 'Legendado'], key='type')],
             [sg.Text('Horário', size=(15,1)), sg.InputText(key='dateTime')],
-           [sg.Text('Imagem', size=(15,1)), sg.Input(key='image',size=(35,1)), sg.FileBrowse(file_types=[("Image files", "*.png *.jpeg")], key="-IN-")],
+            [sg.Text('Imagem', size=(15,1)), sg.Input(key='image',size=(35,1)), sg.FileBrowse(file_types=[("Image files", "*.png *.jpeg")], key="-IN-")],
 
-            [sg.Button("Cadastrar", key='create'), sg.Button("Parar de cadastrar", key='endCreate')]
+            [sg.Button("Cadastrar", key='create'), sg.Button("Parar de cadastrar", key='endCreate'), sg.Button("Voltar", key='returnHome')]
         ]
         return layout
+        
     def addFood(self, name, price, store, image):
         id = self.getLastId()
         id = id + 1
@@ -55,20 +56,31 @@ class Estoque():
         id = id + 1
         self.products.append(Sessoes(name, id, price, dateTime, type, image))
 
-    
     def createScreen(self):
-        layout = [
+        layoutHome = [
             [sg.Text("O que você deseja cadastrar?", size=(30,2), background_color='#b0aac2', text_color='#000814',auto_size_text=True, justification='center', font=Util.getTitleFont())],
-            [sg.Button(button_text='Alimentos', key='food', button_color=['#000', '#3478C1']), sg.Button(button_text='Sessões',button_color=['#000', '#3478C1'], key='sessions')],
+            [sg.Button(button_text='Alimentos', key='food', button_color=['#000', '#3478C1']), sg.Button(button_text='Sessões',button_color=['#000', '#3478C1'], key='sessions'), sg.Button("Voltar", key='return', button_color=['#000', '#3478C1'])],
 
         ]
+        layout = layoutHome
         sg.theme(Util.theme())
         window = sg.Window('Tela de cadastro', layout,size=Util.screenSize(), element_justification='c', font=Util.getFont())
         isFood = False
         while True:
             event, values = window.read()
-            if event == sg.WIN_CLOSED or event == 'Close' or event == 'endCreate':
-                break
+            if event == sg.WIN_CLOSED or event == 'Close':
+                window.close()
+                return None
+            if event == 'endCreate':
+                window.close()
+                return True
+            if event == 'return':
+                window.close()
+                return False
+            if event == 'returnHome':
+                window.close()
+                window = sg.Window('Tela de cadastro', layoutHome,size=Util.screenSize(), element_justification='c', font=Util.getFont())
+
             if event == 'food':
                 isFood = True
                 window.close()

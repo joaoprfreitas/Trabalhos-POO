@@ -6,7 +6,10 @@ class PaymentScreen():
     def __init__(self):
         'Define o layout da página de pagamentos'
 
+        sg.theme(Util.theme())
+
         self.layout = [
+            [sg.Text("\n\n\n\n", font = Util.getFont)],
             [sg.Text('Nome', font=Util.getFont(), background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
              sg.Text('Sem caracteres especiais', font=Util.getFontPlaceholder(), background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())],
             [sg.InputText(key='name')],
@@ -32,7 +35,6 @@ class PaymentScreen():
             [sg.Button('Voltar', size=(10, 1), font=Util.getFont()), sg.Button('Pagar', size=(10, 1), font=Util.getFont())]
         ]
 
-        sg.theme(Util.theme())
         self.screen = sg.Window('Pagamento', self.layout, size=Util.screenSize(), element_justification='center')
 
     def getFields(self):

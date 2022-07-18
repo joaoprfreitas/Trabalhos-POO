@@ -1,23 +1,25 @@
 from Estoque import *
-from enum import Enum
 from Inicial import *
 from Carrinho import *
 from Pagamento import *
+from Cadeiras import *
+from Login import *
+
+from enum import Enum
 
 class Flags(Enum):
     HOME = 0
     MOVIES = 1
-    PRODUCTS = 2
-    CART = 3
-    PAYMENT = 4
-    QRCODE = 5
+    CHAIRS = 2
+    PRODUCTS = 3
+    CART = 4
+    PAYMENT = 5
+    QRCODE = 6
 
-    ADMIN = 6
-    ADMIN_MOVIES = 7
-    ADMIN_PRODUCTS = 8
+    LOGIN = 7
+    ADMIN = 8
 
     FINISH = 9
-
 
 if __name__ == '__main__':
     screen = Flags.HOME
@@ -26,16 +28,32 @@ if __name__ == '__main__':
 
     stock = Estoque()
     cart = Carrinho()
+    chairs = Cadeiras()
 
     while True:
         if screen is Flags.HOME:
             homeScreen = Inicial()
             next = homeScreen.TelaInicial()
 
-            screen = Flags.FINISH if next is None else Flags.MOVIES
+            if next is None:
+                break
+            elif next:
+                screen = Flags.MOVIES
+            else:
+                screen = Flags.LOGIN
 
         elif screen is Flags.MOVIES:
-            print("MOVIES")
+            print('MOVIES')
+
+        elif screen is Flags.CHAIRS:
+            next = chairs.createScreen()
+
+            if next is None:
+                screen = Flags.HOME
+            elif next:
+                screen = Flags.PRODUCTS
+            else:
+                screen = Flags.MOVIES
 
         elif screen is Flags.PRODUCTS:
             print("PRODUCTS")
@@ -46,11 +64,11 @@ if __name__ == '__main__':
 
             if next is None:
                 screen = Flags.FINISH
-            elif next is False:
-                screen = Flags.PRODUCTS
-            else:
+            elif next:
                 screen = Flags.PAYMENT
                 totalValue = cart.getTotalValue()
+            else:
+                screen = Flags.PRODUCTS
             
         elif screen is Flags.PAYMENT:
             pScreen = PaymentScreen()
@@ -58,23 +76,35 @@ if __name__ == '__main__':
 
             if next is None:
                 screen = Flags.FINISH
-            elif next is False:
-                screen = Flags.CART
-            else:
+            elif next:
                 screen = Flags.QRCODE
                 userInfos = pScreen.getInfos()
+                # Colocar para colocar as cadeiras selecionadas como ocupadas
+            else:
+                screen = Flags.CART
+                
             
         elif screen is Flags.QRCODE:
             print("QRCODE")
+
+        elif screen is Flags.LOGIN:
+            loginScreen = Login()
+            next = loginScreen.createScreen()
+
+            if next is None:
+                screen = Flags.FINISH
+            elif next:
+                screen = Flags.ADMIN
+            else:
+                screen = Flags.HOME
             
         elif screen is Flags.ADMIN:
-            print("ADMIN")
-            
-        elif screen is Flags.ADMIN_MOVIES:
-            print("ADMIN_MOVIES")
+            next = stock.createScreen()
 
-        elif screen is Flags.ADMIN_PRODUCTS:
-            print("ADMIN_PRODUCTS")
+            if next is None:
+                screen = Flags.FINISH
+            else:
+                screen = Flags.HOME
 
         elif screen is Flags.FINISH:
             break
