@@ -17,7 +17,7 @@ class Cadeiras:
                 linha.append(sg.Button(key='CAD{},{}'.format(i, j), image_data=self.arrayCadeiras[self.vazia], image_subsample=3, border_width=0, mouseover_colors='yellow'))
 
             linha.insert(4, sg.Push())
-            linha.insert(9, sg.Push())
+            linha.insert(self.total-1, sg.Push())
             self.layout.append(linha)
         
         self.layout.append([sg.Text('Legenda: branco - disponível, vermelho - selecionado, preto - indisponível', font=Util.getFont()), sg.Push(), sg.Text('Total selecionado: 0', size=18, font=Util.getFont(), key='-TOTAL-')])
@@ -43,6 +43,7 @@ class Cadeiras:
 
     def createScreen(self):
         
+        self.atualizarLayout()
         window = sg.Window(title='Selecione suas cadeiras!', layout=self.layout, element_justification='c', size=Util.screenSize())
         total = 0
 
@@ -50,7 +51,7 @@ class Cadeiras:
             event, values = window.read()
             print(event)
 
-            if event == sg.WIN_CLOSED:
+            if event == sg.WIN_CLOSED or event == '-CONFIRMAR-BTT-':
                 break
 
             elif event[:3] == 'CAD':
@@ -70,18 +71,14 @@ class Cadeiras:
         window.close()
         return total
 
-    def confirmar(self):
-
+    def confirmar(self, situacao : bool):
         for i in range(self.total):
             for j in range(self.total):
                 elemento = self.matriz_estados[i][j]
 
-                if elemento == self.selecionada:
-                    self.matriz_estados[i][j] = self.ocupada
+                self.matriz_estados[i][j] = self.vazia if situacao == False else self.ocupada
 
         self.atualizarLayout()
-
-
 
 if __name__ == '__main__':
     cadeiras = Cadeiras()

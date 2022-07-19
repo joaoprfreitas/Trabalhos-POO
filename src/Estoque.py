@@ -64,8 +64,8 @@ class Estoque():
 
         for movie in self.products:
             if isinstance(movie, Sessoes):
-                layout.append([sg.Text(movie.getName(), font = Util.getFont),
-                               sg.Button(button_text=movie.getHorario(), key=movie.getId(), button_color=['#000', '#3478C1'])
+                layout.append([sg.Text(movie.getName(), font = Util.getFont), sg.Input(movie.getId(), visible=False),
+                               sg.Button(button_text="Adicionar", key=movie.getId(), button_color=['#000', '#3478C1'])
                                ])
 
         layout.append([sg.Text("\n", font = Util.getFont)])
@@ -81,12 +81,16 @@ class Estoque():
             
             if event == sg.WINDOW_CLOSED:
                 return None
-            if event == :
+
                 # Dispara a tela de cadeiras
-            if event == 'Voltar':
+            elif event == 'Voltar':
                 tela.close()
                 return False
-
+            elif event != None:
+                item = list(self.searchProduct(event))[0]
+                if isinstance(item, Sessoes):
+                    cadeiras = item.getCadeiras()
+                    cadeiras.createScreen()
                 
     def createScreen(self):
         layout = [
@@ -115,7 +119,6 @@ class Estoque():
     def createScreenFood(self):
         layout = self.getLayoutFood()
         window = sg.Window('Tela de cadastro', layout,size=Util.screenSize(), element_justification='c')
-        isFood = True
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED or event == 'Close':
