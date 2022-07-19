@@ -20,7 +20,7 @@ class Cadeiras:
             linha.insert(self.total-1, sg.Push())
             self.layout.append(linha)
         
-        self.layout.append([sg.Text('Legenda: branco - disponível, vermelho - selecionado, preto - indisponível', font=Util.getFont()), sg.Push(), sg.Text('Total selecionado: 0', size=18, font=Util.getFont(), key='-TOTAL-')])
+        self.layout.append([sg.Text('Legenda: branco - disponível, vermelho - selecionado, preto - indisponível', font=Util.getFont()), sg.Push(), sg.Text('Total selecionado: {}'.format(self.totalSelecionado), size=18, font=Util.getFont(), key='-TOTAL-')])
         self.layout.append([sg.Button('Confirmar', key='-CONFIRMAR_BTT-', button_color='red')])
 
     def __init__(self):
@@ -33,7 +33,8 @@ class Cadeiras:
         self.vazia = 0
         self.selecionada = 1
         self.ocupada = 2
-
+        
+        self.totalSelecionado = 0
         self.total = 8
         self.matriz_estados = [[self.vazia for i in range(self.total)] for j in range(self.total)]
 
@@ -43,7 +44,6 @@ class Cadeiras:
         
         self.atualizarLayout()
         window = sg.Window(title='Selecione suas cadeiras!', layout=self.layout, element_justification='c', size=Util.screenSize())
-        total = 0
 
         while True:
             event, values = window.read()
@@ -60,16 +60,25 @@ class Cadeiras:
                 if self.matriz_estados[linha][coluna] == self.vazia or self.matriz_estados[linha][coluna] == self.selecionada:
 
                     self.matriz_estados[linha][coluna] = not self.matriz_estados[linha][coluna]
-                    total += 2 * self.matriz_estados[linha][coluna] - 1
+                    self.totalSelecionado += 2 * self.matriz_estados[linha][coluna] - 1
                     window[event].update(image_data=self.arrayCadeiras[self.matriz_estados[linha][coluna]], image_subsample=3)
-                    window['-TOTAL-'].update('Total selecionado: {}'.format(total))
+                    window['-TOTAL-'].update('Total selecionado: {}'.format(self.totalSelecionado))
 
-            print(total)
+        lista = []
 
+        for i in range(self.total):
+            for j in range(self.total):
+                if self.matriz_estados[i][j] == self.selecionada:
+                    lista.append((i,j))
+
+        print(lista)
         window.close()
-        return total
+        return lista
 
     def confirmar(self, situacao : bool):
+
+        self.totalSelecionado = 0
+
         for i in range(self.total):
             for j in range(self.total):
                 elemento = self.matriz_estados[i][j]
