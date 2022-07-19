@@ -1,7 +1,7 @@
 import PySimpleGUI as sg
 from Util import Util
 import math as m
-
+from Ingresso import Ingresso
 class Cadeiras:
 
     def atualizarLayout(self):
