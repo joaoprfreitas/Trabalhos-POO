@@ -56,6 +56,10 @@ class Estoque():
         id = id + 1
         self.products.append(Sessoes(name, id, price, dateTime, type, image))
 
+    def sessoesScreen():
+        Sessoes.telaSessoes()
+                
+
     def createScreen(self):
         layoutHome = [
             [sg.Text("O que você deseja cadastrar?", size=(30,2), background_color='#b0aac2', text_color='#000814',auto_size_text=True, justification='center', font=Util.getTitleFont())],

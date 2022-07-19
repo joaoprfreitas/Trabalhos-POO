@@ -22,6 +22,7 @@ class Produtos():
 
         self.layoutProdutos.append([sg.Text("\n", font = Util.getFont)])
         self.layoutProdutos.append([sg.Button("PRÓXIMO", key='PRÓXIMO', font=Util.getFont)])        
+        self.layoutProdutos.append([sg.Button("VOLTAR", key = 'back', font=Util.getFont)])
 
    
 
@@ -40,6 +41,9 @@ class Produtos():
                 #fechar janela     
                 self.tela.close()
                 return True
+            if event == 'VOLTAR':
+                self.tela.close()
+                return False
             
 if __name__ == '__main__':
     ini = Produtos()

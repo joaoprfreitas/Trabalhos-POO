@@ -4,6 +4,8 @@ from Carrinho import *
 from Pagamento import *
 from Cadeiras import *
 from Login import *
+from Sessoes import *
+from Produtos import *
 
 from enum import Enum
 
@@ -29,6 +31,8 @@ if __name__ == '__main__':
     stock = Estoque()
     cart = Carrinho()
     chairs = Cadeiras()
+    movies = Estoque()
+    products = Produtos()
 
     while True:
         if screen is Flags.HOME:
@@ -43,9 +47,9 @@ if __name__ == '__main__':
                 screen = Flags.LOGIN
 
         elif screen is Flags.MOVIES:
-            print('MOVIES')
-
+            next = movies.sessoesScreen()
         elif screen is Flags.CHAIRS:
+
             next = chairs.createScreen()
 
             if next is None:
@@ -56,8 +60,13 @@ if __name__ == '__main__':
                 screen = Flags.MOVIES
 
         elif screen is Flags.PRODUCTS:
-            print("PRODUCTS")
-            
+            next = products.telaProdutos()
+            if  next is None:
+                screen = Flags.HOME
+            elif next:
+                screen = Flags.CART
+            else:
+                screen = Flags.CHAIRS
         elif screen is Flags.CART:
             cart.cartLayout()
             next = cart.createScreen()

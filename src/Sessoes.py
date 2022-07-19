@@ -30,7 +30,7 @@ class Sessoes(Item):
         self.layoutSessoes.append([sg.Text("\n", font = Util.getFont)])
         self.layoutSessoes.append([sg.Button("PRÓXIMO", key='PRÓXIMO', font=Util.getFont)])        
 
-    def telaSessoes(self):  
+    def telaSessoes():  
         self.tela = sg.Window('Sessões Disponíveis', self.layoutSessoes, size=Util.screenSize(), element_justification='center') 
 
         subT = 0
