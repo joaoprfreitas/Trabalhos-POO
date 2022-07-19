@@ -33,3 +33,5 @@ class Item():
         if self.store < quantity:
             raise Exception("Quantity must be less than store")
         self.store = self.store - quantity
+    def __str__(self):
+        return "Item: " + str(self.name) + "  Preço: R$" +str(self.price) 

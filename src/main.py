@@ -87,8 +87,13 @@ if __name__ == '__main__':
                 
             
         elif screen is Flags.QRCODE:
-            print("QRCODE")
-
+            cart.qrCodeLayout()
+            if next is None:
+                screen = Flags.FINISH
+            elif next:
+                screen = Flags.Home
+            else:
+                screen = Flags.PAYMENT
         elif screen is Flags.LOGIN:
             loginScreen = Login()
             next = loginScreen.createScreen()
