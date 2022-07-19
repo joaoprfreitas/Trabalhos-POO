@@ -4,7 +4,6 @@ from Sessoes import *
 from Util import *
 
 class Estoque():
-
     products = []
 
     def searchProduct(self, id:int):
@@ -56,10 +55,39 @@ class Estoque():
         id = id + 1
         self.products.append(Sessoes(name, id, price, dateTime, type, image))
 
-    def sessoesScreen():
-        Sessoes.telaSessoes()
-                
+    def getSessionListLayout(self):
+        sg.theme(Util.theme())
+        layout = [
+            [sg.Text("Sessoes disponíveis", font=('Arial', 15, 'bold'))],
+            [sg.Text("\n", font = Util.getFont)],
+        ]
 
+        for movie in self.products:
+            if isinstance(movie, Sessoes):
+                layout.append([sg.Text(movie.getName(), font = Util.getFont),
+                               sg.Button(button_text=movie.getHorario(), key=movie.getId(), button_color=['#000', '#3478C1'])
+                               ])
+
+        layout.append([sg.Text("\n", font = Util.getFont)])
+        layout.append([sg.Button("Voltar", key='Voltar', font=Util.getFont)])
+        
+        return layout
+
+    def createScreenSessionsList(self):
+        tela = sg.Window('Sessões Disponíveis', self.getSessionListLayout(), size=Util.screenSize(), element_justification='center') 
+
+        while True:      
+            event, values = tela.read()
+            
+            if event == sg.WINDOW_CLOSED:
+                return None
+            if event == :
+                # Dispara a tela de cadeiras
+            if event == 'Voltar':
+                tela.close()
+                return False
+
+                
     def createScreen(self):
         layout = [
             [sg.Text("O que você deseja cadastrar?", size=(30,2), background_color='#b0aac2', text_color='#000814',auto_size_text=True, justification='center', font=Util.getTitleFont())],
@@ -157,6 +185,7 @@ class Estoque():
                     sg.Popup("Produto cadastro com sucesso")
                 except Exception as error:
                     sg.PopupError(error.args)
+
     def createScreenSession(self):
         layout = self.getLayoutSession()
         window = sg.Window('Tela de cadastro', layout,size=Util.screenSize(), element_justification='c')
@@ -241,7 +270,6 @@ class Estoque():
                 except Exception as error:
                     sg.PopupError(error.args)
             
-
 if __name__ == '__main__':
     estoque = Estoque()
     estoque.createScreen()

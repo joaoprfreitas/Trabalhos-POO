@@ -9,6 +9,7 @@ class Produtos():
         #productList = Estoque.products
         sg.theme(Util.theme())
         productList = Estoque.products
+
         self.layoutProdutos = [
             [sg.Text("Produtos disponíveis", font=('Arial', 15, 'bold'))],
             

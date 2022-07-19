@@ -49,9 +49,14 @@ if __name__ == '__main__':
                 screen = Flags.LOGIN
 
         elif screen is Flags.MOVIES:
-            next = movies.sessoesScreen()
-        elif screen is Flags.CHAIRS:
+            next = stock.createScreenSessionsList()
 
+            if next is None:
+                screen = Flags.FINISH
+            elif next is False:
+                screen = Flags.HOME
+
+        elif screen is Flags.CHAIRS:
             next = chairs.createScreen()
 
             if next is None:
@@ -63,12 +68,14 @@ if __name__ == '__main__':
 
         elif screen is Flags.PRODUCTS:
             next = products.telaProdutos()
+
             if  next is None:
                 screen = Flags.HOME
             elif next:
                 screen = Flags.CART
             else:
                 screen = Flags.CHAIRS
+
         elif screen is Flags.CART:
             cart.cartLayout()
             next = cart.createScreen()
