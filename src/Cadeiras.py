@@ -34,7 +34,7 @@ class Cadeiras:
         self.selecionada = 1
         self.ocupada = 2
 
-        self.total = 10
+        self.total = 8
         self.matriz_estados = [[self.vazia for i in range(self.total)] for j in range(self.total)]
 
         self.atualizarLayout()
@@ -49,7 +49,7 @@ class Cadeiras:
             event, values = window.read()
             print(event)
 
-            if event == sg.WIN_CLOSED or event == '-CONFIRMAR-BTT-':
+            if event == sg.WIN_CLOSED or event == '-CONFIRMAR_BTT-':
                 break
 
             elif event[:3] == 'CAD':
