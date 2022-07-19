@@ -5,7 +5,11 @@ from Util import *
 
 class Estoque():
     products = []
-
+    def __init__(self):
+        self.addSession("Minions 2", 17.50, "Legendado", "15:00", "path")
+        self.addSession("Minions 3", 17.50, "Legendado", "15:00", "path")
+        self.addSession("Minions 4", 17.50, "Legendado", "15:00", "path")
+    
     def searchProduct(self, id:int):
         if  type(id) != int:
             raise Exception("Id must be integer")
@@ -91,6 +95,8 @@ class Estoque():
                 if isinstance(item, Sessoes):
                     cadeiras = item.getCadeiras()
                     cadeiras.createScreen()
+
+
                 
     def createScreen(self):
         layout = [

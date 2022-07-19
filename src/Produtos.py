@@ -31,7 +31,7 @@ class Produtos():
         self.tela = sg.Window('Produtos', self.layoutProdutos, size=Util.screenSize(), element_justification='center') 
 
         subT = 0
-        while True:      
+        while True:
             event, values = self.tela.read()
             
             if event == sg.WINDOW_CLOSED:

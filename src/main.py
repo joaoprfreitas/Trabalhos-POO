@@ -32,8 +32,6 @@ if __name__ == '__main__':
 
     stock = Estoque()
     cart = Carrinho()
-    chairs = Cadeiras()
-    movies = Estoque()
     products = Produtos()
 
     while True:
