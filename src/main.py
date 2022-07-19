@@ -18,8 +18,10 @@ class Flags(Enum):
 
     LOGIN = 7
     ADMIN = 8
+    ADMIN_SESSION = 9
+    ADMIN_FOOD = 10
 
-    FINISH = 9
+    FINISH = 11
 
 if __name__ == '__main__':
     screen = Flags.HOME
@@ -103,9 +105,28 @@ if __name__ == '__main__':
 
             if next is None:
                 screen = Flags.FINISH
+            elif next == 1:
+                screen = Flags.ADMIN_FOOD
+            elif next == 2:
+                screen = Flags.ADMIN_SESSION
             else:
                 screen = Flags.HOME
-
+        elif screen is Flags.ADMIN_FOOD:
+            next = stock.createScreenFood()
+            if next is None:
+                screen = Flags.FINISH
+            elif next:
+                screen = Flags.HOME
+            else:
+                screen = Flags.ADMIN
+        elif screen is Flags.ADMIN_SESSION:
+            next = stock.createScreenSession()
+            if next is None:
+                screen = Flags.FINISH
+            elif next:
+                screen = Flags.HOME
+            else:
+                screen = Flags.ADMIN
         elif screen is Flags.FINISH:
             break
 
