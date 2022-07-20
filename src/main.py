@@ -34,6 +34,16 @@ if __name__ == '__main__':
     cart = Carrinho()
     products = Produtos()
 
+    # MOVIES
+    # CHAIRS
+    # PRODUCTS
+    # CART
+    # PAYMENT
+    # QRCODE
+    # ADMIN
+    # ADMIN_SESSION
+    # ADMIN_FOOD
+
     while True:
         if screen is Flags.HOME:
             homeScreen = Inicial()
@@ -58,7 +68,6 @@ if __name__ == '__main__':
                 for ticket in next[0]:
                     cart.addProduct(ticket)
                 screen = Flags.PRODUCTS
-
 
         elif screen is Flags.PRODUCTS:
             products.defProductsLayout(stock)

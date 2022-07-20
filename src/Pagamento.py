@@ -10,29 +10,30 @@ class PaymentScreen():
 
         self.layout = [
             [sg.Text("\n\n\n\n", font = Util.getFont)],
-            [sg.Text('Nome', font=Util.getFont(), background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
-             sg.Text('Sem caracteres especiais', font=Util.getFontPlaceholder(), background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())],
+            [sg.Text('Nome', font=Util.getFont()),
+             sg.Text('Sem caracteres especiais', font=Util.getFontPlaceholder())],
             [sg.InputText(key='name')],
 
-            [sg.Text('Numero do cartão', font=Util.getFont(), background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
-             sg.Text('(xxxxxxxxxxxxxxxx)', font=Util.getFontPlaceholder(), background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())],
+            [sg.Text('Numero do cartão', font=Util.getFont()),
+             sg.Text('(xxxxxxxxxxxxxxxx)', font=Util.getFontPlaceholder())],
             [sg.InputText(key='card')],
 
-            [sg.Text('CPF', font=Util.getFont(), background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
-             sg.Text('(xxxxxxxxxxx)', font=Util.getFontPlaceholder(), background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())],
+            [sg.Text('CPF', font=Util.getFont()),
+             sg.Text('(xxxxxxxxxxx)', font=Util.getFontPlaceholder())],
             [sg.InputText(key='cpf')],
 
-            [sg.Text('CVV', font=Util.getFont(), background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
-             sg.Text('(xxx)', font=Util.getFontPlaceholder(), background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())],
+            [sg.Text('CVV', font=Util.getFont()),
+             sg.Text('(xxx)', font=Util.getFontPlaceholder())],
             [sg.InputText(key='cvv')],
 
-            [sg.Text('Validade', font=Util.getFont(), background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
-             sg.Text('(mm/yy)', font=Util.getFontPlaceholder(), background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())],
+            [sg.Text('Validade', font=Util.getFont()),
+             sg.Text('(mm/yy)', font=Util.getFontPlaceholder())],
             [sg.InputText(key='expiring-date')],
 
-            [sg.Checkbox('Estou ciente e aceito os termos de Uso.', key='accepted', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())],
+            [sg.Checkbox('Estou ciente e aceito os termos de Uso.', key='accepted')],
 
-            [sg.Button('Voltar', size=(10, 1), font=Util.getFont()), sg.Button('Pagar', size=(10, 1), font=Util.getFont())]
+            [sg.Button('Voltar', size=(10, 1), font=Util.getFont(), button_color=Util.getButtonColor()),
+             sg.Button('Pagar', size=(10, 1), font=Util.getFont(), button_color=Util.getButtonColor())]
         ]
 
         self.screen = sg.Window('Pagamento', self.layout, size=Util.screenSize(), element_justification='center')
@@ -60,7 +61,7 @@ class PaymentScreen():
             sg.PopupError('O campo numero do cartão é obrigatório')
             return False
         if not re.match(regexCard, self.values['card']):
-            sg.PopupError('O campo numero do cartão está em formato incorreto (11 dígitos)')
+            sg.PopupError('O campo numero do cartão está em formato incorreto (16 dígitos)')
             return False
         if self.values['cpf'] == '':
             sg.PopupError('O campo CPF é obrigatório')
