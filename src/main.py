@@ -53,16 +53,12 @@ if __name__ == '__main__':
                 screen = Flags.FINISH
             elif next is False:
                 screen = Flags.HOME
-
-        elif screen is Flags.CHAIRS:
-            next = chairs.createScreen()
-
-            if next is None:
-                screen = Flags.HOME
-            elif next:
-                screen = Flags.PRODUCTS
             else:
-                screen = Flags.MOVIES
+                cart.removeAllTickets(next[1])
+                for ticket in next[0]:
+                    cart.addProduct(ticket)
+                screen = Flags.PRODUCTS
+
 
         elif screen is Flags.PRODUCTS:
             next = products.telaProdutos()

@@ -1,7 +1,9 @@
+from os import listxattr
 import PySimpleGUI as sg
 from Item import *
 from Sessoes import *
 from Util import *
+from Ingresso import *
 
 class Estoque():
     products = []
@@ -93,8 +95,14 @@ class Estoque():
             elif event != None:
                 item = list(self.searchProduct(event))[0]
                 if isinstance(item, Sessoes):
+                    tela.close()
                     cadeiras = item.getCadeiras()
-                    cadeiras.createScreen()
+                    tickets = cadeiras.createScreen()
+                    listTicket = []
+                    for ticket in tickets:
+                        chair = str(ticket[0]) + str(ticket[1])
+                        listTicket.append(Ingresso(item.getName(), chair, item.getId(), item.getPrice()))
+                return listTicket, item.getId()
 
 
                 
