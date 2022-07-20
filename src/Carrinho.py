@@ -5,6 +5,7 @@ from Item import *
 from reportlab.pdfgen import canvas
 from Sessoes import *
 from Ingresso import *
+
 class Carrinho():
     'Classe do tipo carrinho'
 
@@ -19,42 +20,36 @@ class Carrinho():
         self.layout = []
 
         # Cabeçalho
-        self.layout.append([sg.Text('Carrinho', font=Util.getTitleFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())])
+        self.layout.append([sg.Text('Carrinho', font=Util.getTitleFont(), justification='center')])
 
         # Cabeçalho da tabela
-        self.layout.append([sg.Text('Produto', font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
-                            sg.Text('Valor', font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
-                            sg.Text('Quantidade', font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
-                            sg.Text('Subtotal', font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())
+        self.layout.append([sg.Text('Produto', font=Util.getFont(), justification='center'),
+                            sg.Text('Valor', font=Util.getFont(), justification='center'),
+                            sg.Text('Quantidade', font=Util.getFont(), justification='center'),
+                            sg.Text('Subtotal', font=Util.getFont(), justification='center')
                             ])
 
         
         # Lista de produtos
-        whiteBackground = True
         for product in self.productList:
             if isinstance(product, Item):
-                backgroundColor = '#ffffff'
-                if not whiteBackground: backgroundColor = Util.fontBackgroundColor()
-
-                whiteBackground = not whiteBackground
-
                 subTotal = product.getPrice() * product.getAmount()
-                self.layout.append([sg.Text(product.getName(), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor()),
-                                    sg.Text(str(product.getPrice()), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor()),
-                                    sg.Text(str(product.getAmount()), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor()),
-                                    sg.Text(str(subTotal), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor())
+                self.layout.append([sg.Text(product.getName(), font=Util.getFont(), justification='center'),
+                                    sg.Text(str(product.getPrice()), font=Util.getFont(), justification='center'),
+                                    sg.Text(str(product.getAmount()), font=Util.getFont(), justification='center'),
+                                    sg.Text(str(subTotal), font=Util.getFont(), justification='center')
                                     ])
 
                 self.totalValue += subTotal
 
         # Total
-        self.layout.append([sg.Text('Total:', font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
-                            sg.Text(str(self.totalValue), font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())
+        self.layout.append([sg.Text('Total:', font=Util.getFont(), justification='center'),
+                            sg.Text(str(self.totalValue), font=Util.getFont(), justification='center')
                             ])
 
         # Botões
-        self.layout.append([sg.Button('Voltar', size=(10, 1), font=Util.getFont()),
-                            sg.Button('Confirmar', size=(10, 1), font=Util.getFont())
+        self.layout.append([sg.Button('Voltar', size=(10, 1), font=Util.getFont(), button_color=Util.getButtonColor()),
+                            sg.Button('Confirmar', size=(10, 1), font=Util.getFont(), button_color=Util.getButtonColor())
                             ])
 
         sg.theme(Util.theme())
@@ -112,6 +107,7 @@ class Carrinho():
     def determineTicket(ticket, idSession):
         if isinstance(ticket, Ingresso) and ticket.getSessao() == idSession:
             return True
+
     def removeAllTickets(self, idSession:int):
         self.productList = [x for x in self.productList if not self.determineTicket(x, idSession)]
 
@@ -160,17 +156,3 @@ class Carrinho():
             elif self.button == 'Voltar':
                 self.screen.close()
                 return False
-
-if __name__ == '__main__':
-    lista = [["Produto 1", 10.00, 2],
-             ["Produto 2", 20.00, 1],
-             ["Produto 3", 30.00, 3],
-             ["Produto 4", 40.00, 4],
-             ["Produto 5", 50.00, 5],
-             ["Produto 6", 60.00, 6],
-             ["Produto 7", 70.00, 7]]
-    carrinho = Carrinho(lista)
-    carrinho.cartLayout()
-    retorno = carrinho.createScreen()
-
-    print(retorno)

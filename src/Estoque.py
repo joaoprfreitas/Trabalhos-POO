@@ -1,4 +1,3 @@
-from os import listxattr
 import PySimpleGUI as sg
 from Item import *
 from Sessoes import *

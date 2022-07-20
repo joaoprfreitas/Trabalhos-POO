@@ -1,24 +1,37 @@
-from xmlrpc.client import FastMarshaller
 import PySimpleGUI as sg
 from Util import *
  
-class Inicial():  
+class Inicial():
+    'Cria a tela home do sistema'
     def __init__(self):
+        'Define o layout da tela'
         sg.theme(Util.theme())
 
         layout = [
-            [sg.Text("\n\n\n\n\n\n", font = Util.getFont)],
-            [sg.Text("Bem vindo ao CineVision\n", font = Util.getFont)],
-            [sg.Text("Estou aqui para lhe auxiliar a comprar seus ingressos e\n", font = Util.getFont)],
-            [sg.Text("os lanches para a hora do filme!\n", font = Util.getFont)],
-            [sg.Button('Proximo', font=Util.getFont())],
-            [sg.Text("\n\n\n\n", font = Util.getFont)],
-            [sg.Button('Admin Dashboard', font=Util.getFont())]
+            [sg.HSep()],
+            [sg.Text("\n", font = Util.getFont)],
+            [sg.Text("CINEMARK\n", font = Util.getTitleFont())],
+            [sg.HSep()],
+            [sg.Text("\n", font = Util.getFont)],
+            [sg.Text("Garanta aqui seus ingressos!", font = Util.getFont)],
+            [sg.Text("Prossiga para continuarmos.", font = Util.getFont)],
+            [sg.Text("\n", font = Util.getFont)],
+            [sg.HSep()],
+            [sg.Frame('Cliente', [
+                                  [sg.T(s=100)],
+                                  [sg.Button('Proximo', key='Proximo', font=Util.bigButtonFont(), button_color=Util.getButtonColor())]
+                                 ], element_justification='center')],
+            [sg.Text("\n\n", font = Util.getFont)],
+            [sg.Frame('Admin', [
+                                [sg.T(s=100)],
+                                [sg.Button('Admin Dashboard', key='Admin Dashboard', font=Util.getFont(), button_color=Util.getButtonColor())]
+                               ], element_justification='center')]
         ]
         
         self.tela = sg.Window('Bem Vindo', layout, size=Util.screenSize(), element_justification='center') 
        
-    def TelaInicial(self):    
+    def TelaInicial(self):
+        'Inicia a tela, e retorna True, False ou None para o controle'
         while True:
             eventos, valores = self.tela.read()
             if eventos == sg.WIN_CLOSED:
