@@ -3,8 +3,12 @@ import PySimpleGUI as sg
 from Util import *
 from Item import *
 from reportlab.pdfgen import canvas
+from reportlab.lib.units import mm
+from reportlab_qrcode import QRCodeImage
+
 from Sessoes import *
 from Ingresso import *
+from Estoque import *
 
 class Carrinho():
     'Classe do tipo carrinho'
@@ -62,7 +66,7 @@ class Carrinho():
         self.layout = []
 
         # Cabeçalho
-        self.layout.append([sg.Text('Carrinho', font=Util.getTitleFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())])
+        self.layout.append([sg.Text('Ticket', font=Util.getTitleFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())])
 
         # Cabeçalho da tabela
         self.layout.append([sg.Text('Produto', font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
@@ -91,6 +95,9 @@ class Carrinho():
 
                 self.totalValue += subTotal
 
+        qr = QRCodeImage('Aleatório', size=30 * mm)
+        qr.drawOn(self.report, 0, 0)
+        self.report.showPage()
         # Total
         self.layout.append([sg.Text('Total:', font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
                             sg.Text(str(self.totalValue), font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())
@@ -126,6 +133,11 @@ class Carrinho():
     def getTotalValue(self):
         'Retorna o valor total do carrinho'
         return self.totalValue
+
+    def finishPayment(self, estoque):
+        for product in self.productList:
+            estoque.sell(product)
+        self.productList = []
 
     def createScreen(self):
         'Inicia a tela de carrinho, retornando True se o usuário confirmar, '
