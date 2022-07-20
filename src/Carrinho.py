@@ -5,6 +5,8 @@ from Item import *
 from reportlab.pdfgen import canvas
 from Sessoes import *
 from Ingresso import *
+from Estoque import *
+
 class Carrinho():
     'Classe do tipo carrinho'
 
@@ -130,6 +132,11 @@ class Carrinho():
     def getTotalValue(self):
         'Retorna o valor total do carrinho'
         return self.totalValue
+
+    def finishPayment(self, estoque):
+        for product in self.productList:
+            estoque.sell(product)
+        self.productList = []
 
     def createScreen(self):
         'Inicia a tela de carrinho, retornando True se o usuário confirmar, '

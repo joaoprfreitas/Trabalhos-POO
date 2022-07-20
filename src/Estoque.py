@@ -61,6 +61,18 @@ class Estoque():
         id = id + 1
         self.products.append(Sessoes(name, id, price, dateTime, type, image))
 
+    def sell(self, item):
+        if isinstance(item, Ingresso):
+            movie = list(self.searchProduct(item.getSessao()))[0]
+            chairs = movie.getCadeiras()
+            chairs.confirmar(True)
+        else:
+            product = list(self.searchProduct(item.getId()))[0]
+            product.sell(item.getAmout())
+
+
+
+
     def getSessionListLayout(self):
         sg.theme(Util.theme())
         layout = [
