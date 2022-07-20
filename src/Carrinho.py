@@ -118,10 +118,11 @@ class Carrinho():
         self.screen = sg.Window('Carrinho', self.layout, size=Util.screenSize(), element_justification='center')
 
     def determineTicket(ticket, idSession):
+
         if isinstance(ticket, Ingresso) and ticket.getSessao() == idSession:
             return True
     def removeAllTickets(self, idSession:int):
-        self.productList = [x for x in self.productList if not self.determineTicket(x, idSession)]
+        self.productList = [x for x in self.productList if print(x) and not self.determineTicket(x, idSession)]
 
     def addProduct(self, product : Item):
         'Adiciona um produto ao carrinho'

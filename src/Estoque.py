@@ -1,4 +1,3 @@
-from os import listxattr
 import PySimpleGUI as sg
 from Item import *
 from Sessoes import *
@@ -11,6 +10,10 @@ class Estoque():
         self.addSession("Minions 2", 17.50, "Legendado", "15:00", "path")
         self.addSession("Minions 3", 17.50, "Legendado", "15:00", "path")
         self.addSession("Minions 4", 17.50, "Legendado", "15:00", "path")
+        self.addFood("Pipoca grande", 10.30, 100, 'noImage')
+        self.addFood("Pipoca média", 7.30, 100, 'noImage')
+        self.addFood("Pipoca pequena", 5.30, 100, 'noImage')
+
     
     def searchProduct(self, id:int):
         if  type(id) != int:
@@ -24,7 +27,8 @@ class Estoque():
             return 0
         item = self.products[size -1]
         return item.id
-
+    def getProducstList(self):
+        return self.products
     def getLayoutFood(self):
         sg.theme(Util.theme())
         layout = [
