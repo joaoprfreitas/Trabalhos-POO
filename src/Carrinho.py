@@ -85,7 +85,7 @@ class Carrinho():
                 if not whiteBackground: backgroundColor = Util.fontBackgroundColor()
 
                 whiteBackground = not whiteBackground
-                self.report.drawString(50, 800, product + "\n")
+                self.report.drawString(50, 800, str(product) + "\n")
 
                 subTotal = product.getPrice() * product.getAmount()
                 self.layout.append([sg.Text(product.getName(), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor()),
@@ -153,7 +153,7 @@ class Carrinho():
             self.button, self.values = self.screen.read()
             if self.button == sg.WIN_CLOSED:
                 return None
-            elif self.button == 'Download':
+            elif self.button == 'Baixar pdf':
                 self.screen.close()
                 self.report.save()
                 return True

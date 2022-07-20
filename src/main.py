@@ -68,7 +68,7 @@ if __name__ == '__main__':
             elif next:
                 screen = Flags.CART
             else:
-                screen = Flags.CHAIRS
+                screen = Flags.MOVIES
 
         elif screen is Flags.CART:
             cart.cartLayout()
@@ -89,6 +89,7 @@ if __name__ == '__main__':
             if next is None:
                 screen = Flags.FINISH
             elif next:
+
                 screen = Flags.QRCODE
                 userInfos = pScreen.getInfos()
                 # Colocar para colocar as cadeiras selecionadas como ocupadas
@@ -98,10 +99,11 @@ if __name__ == '__main__':
             
         elif screen is Flags.QRCODE:
             cart.qrCodeLayout()
+            next = cart.createScreenQrCode()
             if next is None:
                 screen = Flags.FINISH
             elif next:
-                screen = Flags.Home
+                screen = Flags.HOME
             else:
                 screen = Flags.PAYMENT
         elif screen is Flags.LOGIN:
