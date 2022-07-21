@@ -16,7 +16,7 @@ class Produtos():
             [sg.Text("\n\n", font = Util.getFont)],
 
             [sg.Text("Produtos disponíveis", font=Util.getTitleFont())],
-            
+
             [sg.Text("\n", font = Util.getFont)],
         ]
         self.layoutProdutos.append([sg.HSep()])
@@ -25,7 +25,7 @@ class Produtos():
         for product in productList:
             if not isinstance(product, Sessoes):
                 self.productAdd = product
-                layoutProducts.append([sg.Text(product.getName(), font = Util.getFont), sg.Text("R$:" + str(product.getPrice())), sg.Button("+", key="+ "+ str(product.getId()), size=(2, 1)), sg.Button("-", key="- "+ str(product.getId()), size=(2, 1))])
+                layoutProducts.append([sg.Text(product.getName(), font = Util.getFont), sg.Text("R$:{:.2f}".format(product.getPrice())), sg.Button("+", key="+ "+ str(product.getId()), size=(2, 1)), sg.Button("-", key="- "+ str(product.getId()), size=(2, 1))])
         self.layoutProdutos.append([
                 sg.Frame(
                     "Lista de produtos",
@@ -52,14 +52,17 @@ class Produtos():
 
         subT = 0
         listProducts = carrinho.getProductList()
+
         while True:
             event, values = self.tela.read()
             print(event, values)
             if event == sg.WIN_CLOSED:
                 return None
+
             elif event == 'next':
                 self.tela.close()
                 return listProducts
+
             elif event == 'back':
                 self.tela.close()
                 return False
@@ -74,9 +77,7 @@ class Produtos():
                     else:
                         carrinho.addProduct(Item(x.getName(), x.getId(), x.getPrice(), 1, x.getImagePath()))
                 else:
-                    carrinho.addProduct(Item(x.getName(), x.getId(), x.getPrice(), 1, x.getImagePath()), 1)
-
-             
+                        carrinho.addProduct(Item(x.getName(), x.getId(), x.getPrice(), 1, x.getImagePath()), 1)
 if __name__ == '__main__':
     ini = Produtos()
     ini.telaProdutos()

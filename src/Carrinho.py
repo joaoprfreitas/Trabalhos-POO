@@ -133,6 +133,7 @@ class Carrinho():
 
         if not isinstance(product, Item):
             raise TypeError('O produto deve ser do tipo Item')
+
         index = 0
         item = None
         for pro in self.productList:
@@ -154,6 +155,7 @@ class Carrinho():
     def getProductList(self):
         'Retorna a lista de produtos do carrinho'
         return self.productList
+
     def getItem(self, id:int):
         'Retorna um item do carrinho'
         if  type(id) != int:
@@ -163,6 +165,7 @@ class Carrinho():
             return None
         else:
             return item[0]
+
     def getTotalValue(self):
         'Retorna o valor total do carrinho'
         print('Valor: {}'.format(self.totalValue))

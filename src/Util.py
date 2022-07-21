@@ -2,11 +2,11 @@ class Util:
 
     @staticmethod
     def theme():
-        return 'DarkPurple1'
+        return 'LightBlue'
 
     @staticmethod
     def getFont():
-        return ('Arial', 12)
+        return ('Ubuntu', 12)
 
     @staticmethod
     def getFontPlaceholder():
@@ -26,11 +26,11 @@ class Util:
 
     @staticmethod
     def bigButtonFont():
-        return ('Arial', 25)
+        return ('Ubuntu', 25)
 
     @staticmethod
     def getButtonColor():
-        return ['#000', '#3478C1']
+        return ['#FFF', '#3478C1']
 
     @staticmethod
     def screenSize():

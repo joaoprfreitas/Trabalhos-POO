@@ -3,13 +3,13 @@ from Item import *
 from Sessoes import *
 from Util import *
 from Ingresso import *
+import time
 
 class Estoque():
     products = []
     def __init__(self):
-        self.addSession("Minions 2", 17.50, "Legendado", "15:00", "path")
-        self.addSession("Minions 3", 17.50, "Legendado", "15:00", "path")
-        self.addSession("Minions 4", 17.50, "Legendado", "15:00", "path")
+        self.addSession("Meu Malvado Favorito 1", 17.50, "Dublado", "12:00", "../img/mf1.png")
+        self.addSession("Meu Malvado Favorito 2", 17.50, "Dublado", "15:00", "../img/mf2.png")
         self.addFood("Pipoca grande", 10.30, 100, 'noImage')
         self.addFood("Pipoca média", 7.30, 100, 'noImage')
         self.addFood("Pipoca pequena", 5.30, 100, 'noImage')
@@ -74,29 +74,45 @@ class Estoque():
             product = list(self.searchProduct(item.getId()))[0]
             product.sell(item.getAmount())
 
-
-
-
     def getSessionListLayout(self):
         sg.theme(Util.theme())
-        layout = [
-            [sg.Text("Sessoes disponíveis", font=('Arial', 15, 'bold'))],
-            [sg.Text("\n", font = Util.getFont)],
-        ]
+        layout = [[sg.Push(), sg.Text('', key='esquerda')]]
+
+        key = 0
+        self.listaChaves = []
 
         for movie in self.products:
             if isinstance(movie, Sessoes):
-                layout.append([sg.Text(movie.getName(), font = Util.getFont), sg.Input(movie.getId(), visible=False),
-                               sg.Button(button_text="Adicionar", key=movie.getId(), button_color=['#000', '#3478C1'])
-                               ])
 
-        layout.append([sg.Text("\n", font = Util.getFont)])
-        layout.append([sg.Button("Voltar", key='Voltar', font=Util.getFont)])
+                colunaTexto = sg.Column([[sg.Text(movie.getName(), font=Util.getFont())],
+                                         [sg.Text('Preço: R${:.2f}'.format(movie.getPrice()), font=Util.getFont())],
+                                         [sg.Text('Horário: {}'.format(movie.getHorario()), font=Util.getFont())]])
+
+                colunaImagem = sg.Column([[sg.Image(movie.getImagePath())]])
+
+                colunaAtual = sg.Column([[colunaTexto, sg.Push(), colunaImagem],
+                                         [sg.VPush()]],
+                                         visible=True if key==0 else False, key='COL{}'.format(key))
+
+                layout[0].append(colunaAtual)
+                self.listaChaves.append((key, movie.getId()))
+
+                key += 1
+
+        self.total = key
+        layout[0].extend([sg.Text('            ', key='placeholder'), sg.Button('Próximo\nfilme', key='BTT_DIR', size=(8,2))])
+        layout.append([sg.Push(), sg.Button('Confirmar', font=Util.getFont(), key='Confirmar'), sg.Push()])
+        layout.append([sg.Push(), sg.Button('Voltar', font=Util.getFont(), key='Voltar'), sg.Push()])
+
+        print(layout)
         
         return layout
+        
 
     def createScreenSessionsList(self):
-        tela = sg.Window('Sessões Disponíveis', self.getSessionListLayout(), size=Util.screenSize(), element_justification='center') 
+
+        tela = sg.Window('Sessões Disponíveis', self.getSessionListLayout(), size=Util.screenSize(), element_justification='center', font=Util.getFont()) 
+        index = 0
 
         while True:      
             event, values = tela.read()
@@ -108,8 +124,21 @@ class Estoque():
             elif event == 'Voltar':
                 tela.close()
                 return False
+
+            elif event == 'BTT_DIR':
+
+                tela['BTT_DIR'].update(visible=False)
+                tela['placeholder'].update(visible=False)
+                
+                tela['COL{}'.format(self.listaChaves[index][0])].update(visible=False)
+                index = (index+1) % len(self.listaChaves)
+                tela['COL{}'.format(self.listaChaves[index][0])].update(visible=True)
+                
+                tela['placeholder'].update(visible=True)
+                tela['BTT_DIR'].update(visible=True)
+
             elif event != None:
-                item = list(self.searchProduct(event))[0]
+                item = list(self.searchProduct(self.listaChaves[index][1]))[0]
                 if isinstance(item, Sessoes):
                     tela.close()
                     cadeiras = item.getCadeiras()
@@ -117,7 +146,7 @@ class Estoque():
 
                     if tickets == None:
                         return None
-
+                        
                     listTicket = []
                     for ticket in tickets:
                         chair = str(ticket[0]) + str(ticket[1])

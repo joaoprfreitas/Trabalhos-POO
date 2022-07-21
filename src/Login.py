@@ -13,8 +13,8 @@ class Login:
         cor = sg.theme_background_color()
 
         self.__layout = [[sg.Button(image_data=imagem, button_color=(cor, cor), border_width=0, image_subsample=20, key='-BTT-VOLTAR-'), sg.Push(), sg.Push(), sg.Text(text='   Tela de Login', font=self.fonte), sg.Push(), sg.Push(), sg.Push()],
-                         [sg.Text(text='Usuário:', font=self.fonte), sg.Push(), sg.Input(key='-USUARIO-', do_not_clear=False)],
-                         [sg.Text(text='Senha:', font=self.fonte), sg.Push(), sg.Input(key='-SENHA-', password_char='*', do_not_clear=False)],
+                         [sg.Text(text='Usuário:', font=self.fonte), sg.Push(), sg.Input(key='-USUARIO-', do_not_clear=False, background_color='white')],
+                         [sg.Text(text='Senha:', font=self.fonte), sg.Push(), sg.Input(key='-SENHA-', password_char='*', do_not_clear=False, background_color='white')],
                          [sg.Button('Logar', key='-LOGIN-', font=self.fonte, button_color=Util.getButtonColor())]]
 
     def popupError(self):
