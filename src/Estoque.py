@@ -14,7 +14,6 @@ class Estoque():
         self.addFood("Pipoca média", 7.30, 100, 'noImage')
         self.addFood("Pipoca pequena", 5.30, 100, 'noImage')
 
-    
     def searchProduct(self, id:int):
         if  type(id) != int:
             raise Exception("Id must be integer")
@@ -112,7 +111,6 @@ class Estoque():
         
 
     def createScreenSessionsList(self):
-
         tela = sg.Window('Sessões Disponíveis', self.getSessionListLayout(), size=Util.screenSize(), element_justification='center', font=Util.getFont()) 
         index = 0
 
