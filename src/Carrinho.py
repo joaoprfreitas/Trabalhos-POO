@@ -1,9 +1,13 @@
+import code
 from math import prod
 import PySimpleGUI as sg
 from Util import *
 from Item import *
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import mm, inch
 from reportlab.pdfgen import canvas
-from reportlab.lib.units import mm
+from reportlab.platypus import Image, Paragraph, Table, Frame
 from reportlab_qrcode import QRCodeImage
 
 from Sessoes import *
@@ -63,7 +67,6 @@ class Carrinho():
 
     def qrCodeLayout(self): #Não testado
         'Cria o layout do qr code'
-        self.report = canvas.Canvas("Ticket.pdf")
 
         self.layout = []
 
@@ -87,7 +90,6 @@ class Carrinho():
                 if not whiteBackground: backgroundColor = Util.fontBackgroundColor()
 
                 whiteBackground = not whiteBackground
-                self.report.drawString(50, 800, str(product) + "\n")
 
                 subTotal = product.getPrice() * product.getAmount()
                 self.layout.append([sg.Text(product.getName(), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor()),
@@ -98,9 +100,6 @@ class Carrinho():
 
                 self.totalValue += subTotal
 
-        qr = QRCodeImage('Aleatório', size=30 * mm)
-        qr.drawOn(self.report, 0, 0)
-        self.report.showPage()
         # Total
         self.layout.append([sg.Text('Total:', font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
                             sg.Text('{:.2f}'.format(self.totalValue), font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())
@@ -200,8 +199,68 @@ class Carrinho():
                 return None
             elif self.button == 'Baixar pdf':
                 self.screen.close()
-                self.report.save()
+                self.createPdf()
                 return True
             elif self.button == 'Voltar':
                 self.screen.close()
                 return False
+    def createPdf(self):
+        PAGE_SIZE = (8.27*inch, 11.69*inch)
+        width, height = PAGE_SIZE
+
+        self.c = canvas.Canvas("Ticket.pdf", pagesize=PAGE_SIZE)
+        text = ''
+        codQr = ''
+        for product in self.productList:
+            text += str(product) + "<br/>"
+            codQr += product.getName() + str(product.getId())
+        styles = getSampleStyleSheet()
+        styleH = styles['Heading1']
+        title = """Apresente seu ticket para retirada de produtos"""
+        p = Paragraph(title, styleH)
+        data = [[p]]
+        table_side2 = Table(data, colWidths=5.25*inch, rowHeights=2.55*inch)
+        table_side2.setStyle([("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                        ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                        ("TOPPADDING", (0, 0), (-1, -1), 3),
+                        ])
+        styleH3 = styles['Heading3']
+
+        front_page = []
+        front_page.append(table_side2)
+        p2 = Paragraph(text, styleH3)
+        data = [[p2]]
+        table_side2 = Table(data, colWidths=5.25*inch, rowHeights=2.55*inch)
+        table_side2.setStyle([("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                        ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                        ("TOPPADDING", (0, 0), (-1, -1), 3),
+                        ])
+        
+        front_page.append(table_side2)
+       
+        f = Frame(inch*.25, inch*.5, width-.5*inch, height-1*inch, showBoundary=1)
+        f.addFromList(front_page, self.c)
+        self.c.showPage()
+        front_page = []
+        qr = QRCodeImage(codQr, size=75 * mm)
+        data = [ [qr]]
+        table_side2 = Table(data, colWidths=5.25*inch, rowHeights=2.55*inch)
+        table_side2.setStyle([("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                        ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                        ("TOPPADDING", (0, 0), (-1, -1), 3),
+                        ])
+        
+        front_page.append(table_side2)
+        f.addFromList(front_page, self.c)
+        self.c.showPage()
+        self.c.save()
+
+    def coord(self, x, y, height, unit=1):
+        x, y = x * unit, height -  y * unit
+        return x, y
+
+if __name__ == '__main__':
+    cart = Carrinho()
+    cart.addProduct(Item("teste", 1, 1.9, 1, 'stasdas'))
+    cart.addProduct(Item("tesdasste", 2, 1.9, 1, 'stasdas'))
+    cart.createPdf()
