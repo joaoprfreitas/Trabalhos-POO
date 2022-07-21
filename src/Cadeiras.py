@@ -47,8 +47,14 @@ class Cadeiras:
             event, values = window.read()
             print(event)
 
-            if event == sg.WIN_CLOSED or event == '-CONFIRMAR_BTT-':
-                break
+            if event == sg.WIN_CLOSED:
+                return None
+
+            if event == '-CONFIRMAR_BTT-':
+                if self.totalSelecionado == 0:
+                    sg.PopupOK('Selecione sua cadeira!')
+                else:
+                    break
 
             elif event[:3] == 'CAD':
                 
@@ -79,7 +85,11 @@ class Cadeiras:
 
         for i in range(self.total):
             for j in range(self.total):
-                self.matriz_estados[i][j] = self.vazia if situacao == False else self.ocupada
+                if self.matriz_estados[i][j] == self.selecionada:
+                    if situacao == True:
+                        self.matriz_estados[i][j] = self.ocupada
+                    else:
+                        self.matriz_estados[i][j] = self.vazia
 
         self.atualizarLayout()
 
