@@ -47,7 +47,6 @@ class Cadeiras:
 
         while True:
             event, values = window.read()
-            print(event)
 
             if event == sg.WIN_CLOSED:
                 return None

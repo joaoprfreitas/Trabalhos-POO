@@ -50,7 +50,6 @@ class Carrinho():
                                     ])
 
                 self.totalValue += subTotal
-                print('Iteracao: {}'.format(self.totalValue))
 
         # Total
         self.layout.append([sg.Text('Total:', font=Util.getFont(), justification='center'),
@@ -165,7 +164,6 @@ class Carrinho():
 
     def getTotalValue(self):
         'Retorna o valor total do carrinho'
-        print('Valor: {}'.format(self.totalValue))
         return self.totalValue
 
     def finishPayment(self, estoque):
