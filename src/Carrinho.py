@@ -37,13 +37,12 @@ class Carrinho():
         
         # Lista de produtos
         for product in self.productList:
-
             if isinstance(product, Item):
                 subTotal = product.getPrice() * product.getAmount()
                 self.layout.append([sg.Text(product.getName(), font=Util.getFont(), justification='center'),
-                                    sg.Text(str(product.getPrice()), font=Util.getFont(), justification='center'),
-                                    sg.Text(str(product.getAmount()), font=Util.getFont(), justification='center'),
-                                    sg.Text(str(subTotal), font=Util.getFont(), justification='center')
+                                    sg.Text('{:.2f}'.format(product.getPrice()), font=Util.getFont(), justification='center'),
+                                    sg.Text(product.getAmount(), font=Util.getFont(), justification='center'),
+                                    sg.Text('{:.2f}'.format(subTotal), font=Util.getFont(), justification='center')
                                     ])
 
                 self.totalValue += subTotal
@@ -51,7 +50,7 @@ class Carrinho():
 
         # Total
         self.layout.append([sg.Text('Total:', font=Util.getFont(), justification='center'),
-                            sg.Text(str(self.totalValue), font=Util.getFont(), justification='center')
+                            sg.Text('{:.2f}'.format(self.totalValue), font=Util.getFont(), justification='center')
                             ])
 
         # Botões
