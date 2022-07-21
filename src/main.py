@@ -71,15 +71,13 @@ if __name__ == '__main__':
 
         elif screen is Flags.PRODUCTS:
             products.defProductsLayout(stock)
-            next = products.telaProdutos(stock)
+            next = products.telaProdutos(stock,cart)
 
             if  next is None:
                 screen = Flags.HOME
             elif next is False:
                 screen = Flags.MOVIES
             else:
-                for product in next:
-                    cart.addProduct(product)
                 screen = Flags.CART
 
         elif screen is Flags.CART:

@@ -119,23 +119,47 @@ class Carrinho():
     def removeAllTickets(self, idSession:int):
         self.productList = [x for x in self.productList if print(x) and not self.determineTicket(x, idSession)]
 
-    def addProduct(self, product : Item):
+    def addProduct(self, product : Item, remove = 0):
         'Adiciona um produto ao carrinho'
 
         if not isinstance(product, Item):
             raise TypeError('O produto deve ser do tipo Item')
-
-        self.productList.append(product)
+        index = 0
+        item = None
+        for pro in self.productList:
+                if pro.getId() == int(product.getId()):
+                    item = pro
+                    break
+                index+=1
+        if item is None:
+            if not remove:
+                self.productList.append(product)
+        else:
+            amount = product.getAmount()
+            if remove:
+                amount = -1
+            self.productList[index].upAmount(amount)
+            if self.productList[index].getAmount() == 0:
+                self.productList.pop(index)
 
     def getProductList(self):
         'Retorna a lista de produtos do carrinho'
         return self.productList
-
+    def getItem(self, id:int):
+        'Retorna um item do carrinho'
+        if  type(id) != int:
+            raise Exception("Id must be integer")
+        item = list(filter(lambda p: p.id == id, self.productList))
+        if item == []:
+            return None
+        else:
+            return item[0]
     def getTotalValue(self):
         'Retorna o valor total do carrinho'
         return self.totalValue
 
     def finishPayment(self, estoque):
+        self.totalValue = 0
         for product in self.productList:
             estoque.sell(product)
         self.productList = []

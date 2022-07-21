@@ -19,50 +19,42 @@ class Produtos():
         for product in productList:
             if not isinstance(product, Sessoes):
                 self.productAdd = product
-                self.layoutProdutos.append([sg.Text(product.getName(), font = Util.getFont), sg.Button("+", key="+ "+ str(product.getId()), size=(2, 1)), sg.Button("-", key="- "+ str(product.getId()), size=(2, 1))])
+                self.layoutProdutos.append([sg.Text(product.getName(), font = Util.getFont), sg.Text("R$:" + str(product.getPrice())), sg.Button("+", key="+ "+ str(product.getId()), size=(2, 1)), sg.Button("-", key="- "+ str(product.getId()), size=(2, 1))])
 
         self.layoutProdutos.append([sg.Text("\n", font = Util.getFont)])
-        self.layoutProdutos.append([sg.Button("PRÓXIMO", key='PRÓXIMO', font=Util.getFont)])        
+        self.layoutProdutos.append([sg.Button("PRÓXIMO", key='next', font=Util.getFont)])        
         self.layoutProdutos.append([sg.Button("VOLTAR", key = 'back', font=Util.getFont)])
     
-    def telaProdutos(self, estoque):
+    def telaProdutos(self, estoque, carrinho: Carrinho):
         self.tela = sg.Window('Produtos', self.layoutProdutos, size=Util.screenSize(), element_justification='center') 
 
         subT = 0
-        listProducts = []
+        listProducts = carrinho.getProductList()
         while True:
             event, values = self.tela.read()
             print(event, values)
             if event == sg.WINDOW_CLOSED:
                 return None
-            elif event == 'PRÓXIMO':
+            elif event == 'next':
                 self.tela.close()
                 return listProducts
-            elif event == 'VOLTAR':
+            elif event == 'back':
                 self.tela.close()
                 return False
             else:
                 event, id = event.split(" ")
-                index = 0
-                item = None
-                for pro in listProducts:
-                    if pro.getId() == int(id):
-                        item = pro
-                        break
-                    index+=1
-                if(item == None):
-                    if(event == '+'):
-                        x = list(estoque.searchProduct(int(id)))[0]
-                        listProducts.append(Item(x.getName(), x.getId(), x.getPrice(), 1, x.getImagePath()))
+                x = list(estoque.searchProduct(int(id)))[0]
+
+                if(event == '+'):
+                    item = carrinho.getItem(x.getId())
+                    if item != None and item.getAmount() + 1 > x .getAmount():
+                        sg.PopupError("Item não disponível em estoque")
                     else:
-                        continue
+                        carrinho.addProduct(Item(x.getName(), x.getId(), x.getPrice(), 1, x.getImagePath()))
                 else:
-                    qtt = 0
-                    if(event == "+"):
-                        qtt = 1
-                    else:
-                        qtt = -1     
-                    listProducts[index].upAmount(qtt)
+                    carrinho.addProduct(Item(x.getName(), x.getId(), x.getPrice(), 1, x.getImagePath()), 1)
+
+             
 if __name__ == '__main__':
     ini = Produtos()
     ini.telaProdutos()
