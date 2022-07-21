@@ -3,7 +3,6 @@ from Item import *
 from Sessoes import *
 from Util import *
 from Ingresso import *
-import time
 
 class Estoque():
     products = []
@@ -27,16 +26,20 @@ class Estoque():
             return 0
         item = self.products[size -1]
         return item.id
+
     def getProducstList(self):
         return self.products
+
     def getLayoutFood(self):
         sg.theme(Util.theme())
         layout = [
-            [sg.Text('Cadastro de alimentos',size=(30,2), background_color='#b0aac2', text_color='#000814',auto_size_text=True, justification='center', font=(Util.getFont(), 20))],
-            [sg.Text('Nome', size =(15, 1)), sg.InputText(key='name')],
-            [sg.Text('Preço', size =(15, 1)), sg.InputText(key='price')],
-            [sg.Text('Estoque', size =(15, 1)), sg.InputText( key='store')],
-            [sg.Text('Imagem',size=(15,1)), sg.Input(key='image',size=(35,1)), sg.FileBrowse(file_types=[("Image files", "*.png *.jpeg")], key="-IN-")],
+            [sg.Text('Cadastro de alimentos',size=(30,2),auto_size_text=True, justification='center', font=Util.getTitleFont())],
+            [sg.Text('\n\n\n\n')],
+            [sg.Text('Nome', size =(15, 1)), sg.InputText(key='name', size=(50,1))],
+            [sg.Text('Preço', size =(15, 1)), sg.InputText(key='price', size=(50,1))],
+            [sg.Text('Estoque', size =(15, 1)), sg.InputText(key='store', size=(50,1))],
+            [sg.Text('Imagem',size=(15,1)), sg.Input(key='image',size=(41,1)), sg.FileBrowse(file_types=[("Image files", "*.png *.jpeg")], key="-IN-")],
+            [sg.Text('\n\n\n')],
             [sg.Button("Cadastrar", key='create'), sg.Button("Parar de cadastrar", key='endCreate'), sg.Button("Voltar", key='returnHome')]
         ]
         return layout
@@ -44,13 +47,14 @@ class Estoque():
     def getLayoutSession(self):
         sg.theme(Util.theme())
         layout = [
-            [sg.Text('Cadastro de sessões', size=(30,2), background_color='#b0aac2', text_color='#000814',auto_size_text=True, justification='center', font=(Util.getFont(), 20))],
-            [sg.Text('Nome do filme', size =(15, 1)), sg.InputText(key='name')],
-            [sg.Text('Preço', size =(15, 1)), sg.InputText(key='price')],
-            [sg.Text('Tipo', size=(15,1)), sg.Listbox(values=['Dublado', 'Legendado'], key='type')],
-            [sg.Text('Horário', size=(15,1)), sg.InputText(key='dateTime')],
-            [sg.Text('Imagem', size=(15,1)), sg.Input(key='image',size=(35,1)), sg.FileBrowse(file_types=[("Image files", "*.png *.jpeg")], key="-IN-")],
-
+            [sg.Text('Cadastro de sessões', size=(30,2),auto_size_text=True, justification='center', font=Util.getTitleFont())],
+            [sg.Text('\n\n\n')],
+            [sg.Text('Nome do filme', size =(15, 1)), sg.InputText(key='name', size=(50,1))],
+            [sg.Text('Preço', size =(15, 1)), sg.InputText(key='price', size=(50,1))],
+            [sg.Text('Tipo', size=(15,1)), sg.Listbox(values=['Dublado', 'Legendado'], key='type', size=(48,2))],
+            [sg.Text('Horário', size=(15,1)), sg.InputText(key='dateTime', size=(50,1))],
+            [sg.Text('Imagem', size=(15,1)), sg.Input(key='image',size=(41,1)), sg.FileBrowse(file_types=[("Image files", "*.png *.jpeg")], key="-IN-")],
+            [sg.Text('\n\n\n')],
             [sg.Button("Cadastrar", key='create'), sg.Button("Parar de cadastrar", key='endCreate'), sg.Button("Voltar", key='returnHome')]
         ]
         return layout
@@ -83,7 +87,6 @@ class Estoque():
 
         for movie in self.products:
             if isinstance(movie, Sessoes):
-
                 colunaTexto = sg.Column([[sg.Text(movie.getName(), font=Util.getFont())],
                                          [sg.Text('Preço: R${:.2f}'.format(movie.getPrice()), font=Util.getFont())],
                                          [sg.Text('Horário: {}'.format(movie.getHorario()), font=Util.getFont())]])
@@ -103,8 +106,6 @@ class Estoque():
         layout[0].extend([sg.Text('            ', key='placeholder'), sg.Button('Próximo\nfilme', key='BTT_DIR', size=(8,2))])
         layout.append([sg.Push(), sg.Button('Confirmar', font=Util.getFont(), key='Confirmar'), sg.Push()])
         layout.append([sg.Push(), sg.Button('Voltar', font=Util.getFont(), key='Voltar'), sg.Push()])
-
-        print(layout)
         
         return layout
         
@@ -157,9 +158,12 @@ class Estoque():
                 
     def createScreen(self):
         layout = [
-            [sg.Text("O que você deseja cadastrar?", size=(30,2), background_color='#b0aac2', text_color='#000814',auto_size_text=True, justification='center', font=Util.getTitleFont())],
-            [sg.Button(button_text='Alimentos', key='food', button_color=['#000', '#3478C1']), sg.Button(button_text='Sessões',button_color=['#000', '#3478C1'], key='sessions'), sg.Button("Voltar", key='return', button_color=['#000', '#3478C1'])],
-
+            [sg.Text("O que você deseja cadastrar?", size=(30,2), auto_size_text=True, justification='center', font=Util.getTitleFont())],
+            [sg.Text('\n\n\n\n\n')],
+            [sg.Button("Voltar", key='return', button_color=Util.getButtonColor(), font=Util.bigButtonFont()),
+             sg.Button(button_text='Alimentos', key='food', button_color=Util.getButtonColor(), font=Util.bigButtonFont()),
+             sg.Button(button_text='Sessões', button_color=Util.getButtonColor(), key='sessions', font=Util.bigButtonFont())
+            ]
         ]
         sg.theme(Util.theme())
         window = sg.Window('Tela de cadastro', layout,size=Util.screenSize(), element_justification='c', font=Util.getFont())
@@ -194,7 +198,6 @@ class Estoque():
                 window.close()
                 return False 
             elif event == 'sessions':
-                isFood = False
                 window.close()
                 layout = self.getLayoutSession()
                 window = sg.Window('Tela de cadastro', layout,size=Util.screenSize(), element_justification='c')
@@ -255,7 +258,6 @@ class Estoque():
     def createScreenSession(self):
         layout = self.getLayoutSession()
         window = sg.Window('Tela de cadastro', layout,size=Util.screenSize(), element_justification='c')
-        isFood = False
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED or event == 'Close':
@@ -268,7 +270,6 @@ class Estoque():
                 window.close()
                 return False 
             elif event == 'sessions':
-                isFood = False
                 window.close()
                 layout = self.getLayoutSession()
                 window = sg.Window('Tela de cadastro', layout,size=Util.screenSize(), element_justification='c')

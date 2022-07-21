@@ -19,7 +19,7 @@ class Cadeiras:
             self.layout.append(linha)
         
         self.layout.append([sg.Text('Legenda: branco - disponível, vermelho - selecionado, preto - indisponível', font=Util.getFont()), sg.Push(), sg.Text('Total selecionado: {}'.format(self.totalSelecionado), size=18, font=Util.getFont(), key='-TOTAL-')])
-        self.layout.append([sg.Button('Confirmar', key='-CONFIRMAR_BTT-', button_color='red')])
+        self.layout.append([sg.Button('Confirmar', key='-CONFIRMAR_BTT-', button_color=Util.getButtonColor())])
 
     def __init__(self):
 

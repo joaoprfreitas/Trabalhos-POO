@@ -91,9 +91,9 @@ class Carrinho():
 
                 subTotal = product.getPrice() * product.getAmount()
                 self.layout.append([sg.Text(product.getName(), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor()),
-                                    sg.Text(str(product.getPrice()), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor()),
+                                    sg.Text('{:.2f}'.format(product.getPrice()), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor()),
                                     sg.Text(str(product.getAmount()), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor()),
-                                    sg.Text(str(subTotal), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor())
+                                    sg.Text('{:.2f}'.format(subTotal), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor())
                                     ])
 
                 self.totalValue += subTotal
@@ -103,7 +103,7 @@ class Carrinho():
         self.report.showPage()
         # Total
         self.layout.append([sg.Text('Total:', font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
-                            sg.Text(str(self.totalValue), font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())
+                            sg.Text('{:.2f}'.format(self.totalValue), font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())
                             ])
 
         # Botões
