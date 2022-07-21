@@ -34,8 +34,6 @@ if __name__ == '__main__':
     cart = Carrinho()
     products = Produtos()
 
-    # CHAIRS
-    # PRODUCTS
     # CART
     # QRCODE
 
