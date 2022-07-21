@@ -12,7 +12,7 @@ class Ingresso(Item):
 
     def getSessao(self):
         return self.sessaoId
+
     def __str__(self):
         return super().__str__()
-    
     

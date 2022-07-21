@@ -34,9 +34,6 @@ if __name__ == '__main__':
     cart = Carrinho()
     products = Produtos()
 
-    # CART
-    # QRCODE
-
     while True:
         if screen is Flags.HOME:
             homeScreen = Inicial()

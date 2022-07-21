@@ -29,6 +29,7 @@ class Carrinho():
 
         # Cabeçalho
         self.layout.append([sg.Text('Carrinho', font=Util.getTitleFont(), justification='center')])
+        self.layout.append([sg.Text('\n')])
 
         # Cabeçalho da tabela
         self.layout.append([sg.Text('Produto', font=Util.getFont(), justification='center'),
@@ -36,7 +37,7 @@ class Carrinho():
                             sg.Text('Quantidade', font=Util.getFont(), justification='center'),
                             sg.Text('Subtotal', font=Util.getFont(), justification='center')
                             ])
-
+        
         self.totalValue = 0
         
         # Lista de produtos
@@ -52,12 +53,14 @@ class Carrinho():
                 self.totalValue += subTotal
 
         # Total
-        self.layout.append([sg.Text('Total:', font=Util.getFont(), justification='center'),
+        self.layout.append([sg.Text('\n'),
+                            sg.Text('Total:', font=Util.getFont(), justification='center'),
                             sg.Text('{:.2f}'.format(self.totalValue), font=Util.getFont(), justification='center')
                             ])
 
         # Botões
-        self.layout.append([sg.Button('Voltar', size=(10, 1), font=Util.getFont(), button_color=Util.getButtonColor()),
+        self.layout.append([sg.Text('\n'),
+                            sg.Button('Voltar', size=(10, 1), font=Util.getFont(), button_color=Util.getButtonColor()),
                             sg.Button('Confirmar', size=(10, 1), font=Util.getFont(), button_color=Util.getButtonColor())
                             ])
 
