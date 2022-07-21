@@ -1,3 +1,4 @@
+from tkinter import font
 import PySimpleGUI as sg
 from Item import *
 from Sessoes import *
@@ -13,7 +14,6 @@ class Estoque():
         self.addFood("Pipoca média", 7.30, 100, 'noImage')
         self.addFood("Pipoca pequena", 5.30, 100, 'noImage')
 
-    
     def searchProduct(self, id:int):
         if  type(id) != int:
             raise Exception("Id must be integer")
@@ -88,12 +88,13 @@ class Estoque():
         for movie in self.products:
             if isinstance(movie, Sessoes):
                 colunaTexto = sg.Column([[sg.Text(movie.getName(), font=Util.getFont())],
-                                         [sg.Text('Preço: R${:.2f}'.format(movie.getPrice()), font=Util.getFont())],
-                                         [sg.Text('Horário: {}'.format(movie.getHorario()), font=Util.getFont())]])
+                                         [sg.Text('\n')],
+                                         [sg.Text('Preço: R${:.2f}'.format(movie.getPrice()), font=('Ubuntu', 12, 'bold'))],
+                                         [sg.Text('Horário: {}'.format(movie.getHorario()), font=('Ubuntu', 12, 'bold'))]])
 
                 colunaImagem = sg.Column([[sg.Image(movie.getImagePath())]])
 
-                colunaAtual = sg.Column([[colunaTexto, sg.Push(), colunaImagem],
+                colunaAtual = sg.Column([[colunaImagem, sg.Push(), colunaTexto],
                                          [sg.VPush()]],
                                          visible=True if key==0 else False, key='COL{}'.format(key))
 
@@ -104,14 +105,12 @@ class Estoque():
 
         self.total = key
         layout[0].extend([sg.Text('            ', key='placeholder'), sg.Button('Próximo\nfilme', key='BTT_DIR', size=(8,2))])
-        layout.append([sg.Push(), sg.Button('Confirmar', font=Util.getFont(), key='Confirmar'), sg.Push()])
-        layout.append([sg.Push(), sg.Button('Voltar', font=Util.getFont(), key='Voltar'), sg.Push()])
+        layout.append([sg.Push(), sg.Button('Confirmar', font=Util.getFont(), key='Confirmar'), sg.Button('Voltar', font=Util.getFont(), key='Voltar'), sg.Push()])
         
         return layout
         
 
     def createScreenSessionsList(self):
-
         tela = sg.Window('Sessões Disponíveis', self.getSessionListLayout(), size=Util.screenSize(), element_justification='center', font=Util.getFont()) 
         index = 0
 
@@ -339,4 +338,4 @@ class Estoque():
             
 if __name__ == '__main__':
     estoque = Estoque()
-    estoque.createScreen()
+    estoque.createScreenSessionsList()

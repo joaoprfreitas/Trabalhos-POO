@@ -3,8 +3,10 @@ from Util import Util
 class Cadeiras:
 
     def atualizarLayout(self):
-        
         self.layout = []
+
+        self.layout.append([sg.Text('Selecione suas cadeiras', justification='center', font=Util.getTitleFont())])
+        self.layout.append([sg.Text('')])
 
         for i in range(self.total):
 
@@ -18,8 +20,8 @@ class Cadeiras:
             linha.insert(self.total-1, sg.Push())
             self.layout.append(linha)
         
-        self.layout.append([sg.Text('Legenda: branco - disponível, vermelho - selecionado, preto - indisponível', font=Util.getFont()), sg.Push(), sg.Text('Total selecionado: {}'.format(self.totalSelecionado), size=18, font=Util.getFont(), key='-TOTAL-')])
-        self.layout.append([sg.Button('Confirmar', key='-CONFIRMAR_BTT-', button_color=Util.getButtonColor())])
+        self.layout.append([sg.Text('Legenda: azul - disponível, vermelho - selecionada, preto - ocupada', font=Util.getFont()), sg.Push(), sg.Text('Total selecionado: {}'.format(self.totalSelecionado), size=18, font=Util.getFont(), key='-TOTAL-')])
+        self.layout.append([sg.Button('Voltar', key='-VOLTAR-', button_color=Util.getButtonColor(), font=Util.bigButtonFont()), sg.Button('Confirmar', key='-CONFIRMAR_BTT-', button_color=Util.getButtonColor(), font=Util.bigButtonFont())])
 
     def __init__(self):
 
@@ -75,7 +77,6 @@ class Cadeiras:
                 if self.matriz_estados[i][j] == self.selecionada:
                     lista.append((i,j))
 
-        print(lista)
         window.close()
         return lista
 

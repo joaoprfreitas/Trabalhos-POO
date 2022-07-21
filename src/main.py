@@ -34,15 +34,10 @@ if __name__ == '__main__':
     cart = Carrinho()
     products = Produtos()
 
-    # MOVIES
     # CHAIRS
     # PRODUCTS
     # CART
-    # PAYMENT
     # QRCODE
-    # ADMIN
-    # ADMIN_SESSION
-    # ADMIN_FOOD
 
     while True:
         if screen is Flags.HOME:
@@ -93,7 +88,7 @@ if __name__ == '__main__':
                 screen = Flags.PRODUCTS
             
         elif screen is Flags.PAYMENT:
-            pScreen = PaymentScreen()
+            pScreen = PaymentScreen(totalValue)
             next = pScreen.createScreen()
 
             if next is None:
@@ -101,7 +96,6 @@ if __name__ == '__main__':
             elif next:
                 screen = Flags.QRCODE
                 userInfos = pScreen.getInfos()
-                # Colocar para colocar as cadeiras selecionadas como ocupadas
             else:
                 screen = Flags.CART        
             

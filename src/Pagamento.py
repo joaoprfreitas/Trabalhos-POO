@@ -3,13 +3,16 @@ from Util import *
 import re
 
 class PaymentScreen():
-    def __init__(self):
+    def __init__(self, totalValue):
         'Define o layout da página de pagamentos'
 
         sg.theme(Util.theme())
 
         self.layout = [
-            [sg.Text("\n\n\n\n", font = Util.getFont)],
+            [sg.Text('Insira as informações de pagamento', justification='center', font=Util.getTitleFont())],
+            [sg.Text("\n", font = Util.getFont)],
+            [sg.Text("Total: R${:.2f}".format(totalValue), font = Util.getFont)],
+            [sg.Text("\n", font = Util.getFont)],
             [sg.Text('Nome', font=Util.getFont()),
              sg.Text('Sem caracteres especiais', font=Util.getFontPlaceholder())],
             [sg.InputText(key='name')],
