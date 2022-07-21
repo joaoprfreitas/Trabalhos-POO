@@ -46,7 +46,7 @@ class Produtos():
 
             elif event == 'next':
                 self.tela.close()
-                return listProducts
+                return True
 
             elif event == 'back':
                 self.tela.close()
