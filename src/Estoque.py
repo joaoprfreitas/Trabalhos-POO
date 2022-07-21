@@ -114,6 +114,10 @@ class Estoque():
                     tela.close()
                     cadeiras = item.getCadeiras()
                     tickets = cadeiras.createScreen()
+
+                    if tickets == None:
+                        return None
+
                     listTicket = []
                     for ticket in tickets:
                         chair = str(ticket[0]) + str(ticket[1])
