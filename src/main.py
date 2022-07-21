@@ -34,7 +34,6 @@ if __name__ == '__main__':
     cart = Carrinho()
     products = Produtos()
 
-    # MOVIES
     # CHAIRS
     # PRODUCTS
     # CART
@@ -97,7 +96,6 @@ if __name__ == '__main__':
             elif next:
                 screen = Flags.QRCODE
                 userInfos = pScreen.getInfos()
-                # Colocar para colocar as cadeiras selecionadas como ocupadas
             else:
                 screen = Flags.CART        
             
