@@ -33,9 +33,11 @@ class Carrinho():
                             sg.Text('Subtotal', font=Util.getFont(), justification='center')
                             ])
 
+        self.totalValue = 0
         
         # Lista de produtos
         for product in self.productList:
+
             if isinstance(product, Item):
                 subTotal = product.getPrice() * product.getAmount()
                 self.layout.append([sg.Text(product.getName(), font=Util.getFont(), justification='center'),
@@ -45,6 +47,7 @@ class Carrinho():
                                     ])
 
                 self.totalValue += subTotal
+                print('Iteracao: {}'.format(self.totalValue))
 
         # Total
         self.layout.append([sg.Text('Total:', font=Util.getFont(), justification='center'),
@@ -75,7 +78,8 @@ class Carrinho():
                             sg.Text('Subtotal', font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())
                             ])
 
-        
+        self.totalValue = 0
+
         # Lista de produtos
         whiteBackground = True
         for product in self.productList:
@@ -133,6 +137,7 @@ class Carrinho():
 
     def getTotalValue(self):
         'Retorna o valor total do carrinho'
+        print('Valor: {}'.format(self.totalValue))
         return self.totalValue
 
     def finishPayment(self, estoque):

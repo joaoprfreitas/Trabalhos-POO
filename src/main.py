@@ -73,8 +73,8 @@ if __name__ == '__main__':
             products.defProductsLayout(stock)
             next = products.telaProdutos(stock)
 
-            if  next is None:
-                screen = Flags.HOME
+            if next is None:
+                screen = Flags.FINISH
             elif next is False:
                 screen = Flags.MOVIES
             else:

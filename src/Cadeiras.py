@@ -1,7 +1,5 @@
 import PySimpleGUI as sg
 from Util import Util
-import math as m
-from Ingresso import Ingresso
 class Cadeiras:
 
     def atualizarLayout(self):
@@ -81,8 +79,6 @@ class Cadeiras:
 
         for i in range(self.total):
             for j in range(self.total):
-                elemento = self.matriz_estados[i][j]
-
                 self.matriz_estados[i][j] = self.vazia if situacao == False else self.ocupada
 
         self.atualizarLayout()

@@ -72,10 +72,7 @@ class Estoque():
             chairs.confirmar(True)
         else:
             product = list(self.searchProduct(item.getId()))[0]
-            product.sell(item.getAmout())
-
-
-
+            product.sell(item.getAmount())
 
     def getSessionListLayout(self):
         sg.theme(Util.theme())

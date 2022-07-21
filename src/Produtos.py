@@ -33,12 +33,12 @@ class Produtos():
         while True:
             event, values = self.tela.read()
             print(event, values)
-            if event == sg.WINDOW_CLOSED:
+            if event == sg.WIN_CLOSED:
                 return None
             elif event == 'PRÓXIMO':
                 self.tela.close()
                 return listProducts
-            elif event == 'VOLTAR':
+            elif event == 'back':
                 self.tela.close()
                 return False
             else:
