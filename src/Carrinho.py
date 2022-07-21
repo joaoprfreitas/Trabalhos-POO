@@ -121,7 +121,12 @@ class Carrinho():
             return True
 
     def removeAllTickets(self, idSession:int):
-        self.productList = [x for x in self.productList if print(x) and not self.determineTicket(x, idSession)]
+        index  = 0
+        for pro in self.productList:
+            if isinstance(pro, Ingresso) and pro.getSessao() ==idSession:
+                self.productList.pop(index)
+                index -=1
+            index +=1
 
     def addProduct(self, product : Item, remove = 0):
         'Adiciona um produto ao carrinho'
