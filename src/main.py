@@ -78,8 +78,6 @@ if __name__ == '__main__':
             elif next is False:
                 screen = Flags.MOVIES
             else:
-                for product in next:
-                    cart.addProduct(product)
                 screen = Flags.CART
 
         elif screen is Flags.CART:
