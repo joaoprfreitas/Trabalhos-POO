@@ -40,4 +40,4 @@ class Item():
         self.store  = self.store + quantity
 
     def __str__(self):
-        return "Item: " + str(self.name) + "  Preço: R$" +str(self.price) 
+        return str(self.name) + "  Preço: R$" +str(self.price) + " Quantidade: " +str(self.store) + " Total: R$" + '{:.2f}'.format((self.price * self.store))  

@@ -48,7 +48,7 @@ class Estoque():
             [sg.Text('Nome', size =(15, 1)), sg.InputText(key='name', size=(50,1))],
             [sg.Text('Preço', size =(15, 1)), sg.InputText(key='price', size=(50,1))],
             [sg.Text('Estoque', size =(15, 1)), sg.InputText(key='store', size=(50,1))],
-            [sg.Text('Imagem',size=(15,1)), sg.Input(key='image',size=(41,1)), sg.FileBrowse(file_types=[("Image files", "*.png *.jpeg")], key="-IN-")],
+            [sg.Text('Imagem',size=(15,1)), sg.Input(key='image',size=(41,1)), sg.FileBrowse(file_types=[("Image files", "*.png *.jpeg *.jpg")], key="-IN-")],
             [sg.Text('\n\n\n')],
             [sg.Button("Cadastrar", key='create'), sg.Button("Parar de cadastrar", key='endCreate'), sg.Button("Voltar", key='returnHome')]
         ]
@@ -65,7 +65,7 @@ class Estoque():
             [sg.Text('Preço', size =(15, 1)), sg.InputText(key='price', size=(50,1))],
             [sg.Text('Tipo', size=(15,1)), sg.Listbox(values=['Dublado', 'Legendado'], key='type', size=(48,2))],
             [sg.Text('Horário', size=(15,1)), sg.InputText(key='dateTime', size=(50,1))],
-            [sg.Text('Imagem', size=(15,1)), sg.Input(key='image',size=(41,1)), sg.FileBrowse(file_types=[("Image files", "*.png *.jpeg")], key="-IN-")],
+            [sg.Text('Imagem', size=(15,1)), sg.Input(key='image',size=(41,1)), sg.FileBrowse(file_types=[("Image files", "*.png *.jpeg *.jpg")], key="-IN-")],
             [sg.Text('\n\n\n')],
             [sg.Button("Cadastrar", key='create'), sg.Button("Parar de cadastrar", key='endCreate'), sg.Button("Voltar", key='returnHome')]
         ]
@@ -115,7 +115,7 @@ class Estoque():
                                          [sg.Text('Preço: R${:.2f}'.format(movie.getPrice()), font=('Ubuntu', 12, 'bold'))],
                                          [sg.Text('Horário: {}'.format(movie.getHorario()), font=('Ubuntu', 12, 'bold'))]])
 
-                colunaImagem = sg.Column([[sg.Image(movie.getImagePath())]])
+                colunaImagem = sg.Column([[sg.Image(movie.getImagePath(), size=(300,450))]])
 
                 colunaAtual = sg.Column([[colunaImagem, sg.Push(), colunaTexto],
                                          [sg.VPush()]],
