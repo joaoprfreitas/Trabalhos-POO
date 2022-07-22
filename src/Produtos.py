@@ -49,6 +49,7 @@ class Produtos():
                 return True
 
             elif event == 'back':
+                carrinho.emptyProductList()
                 self.tela.close()
                 return False
             else:

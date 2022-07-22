@@ -151,6 +151,9 @@ class Carrinho():
             if self.productList[index].getAmount() == 0:
                 self.productList.pop(index)
 
+    def emptyProductList(self):
+        self.productList = []
+
     def getProductList(self):
         'Retorna a lista de produtos do carrinho'
         return self.productList
