@@ -53,6 +53,8 @@ if __name__ == '__main__':
                 screen = Flags.FINISH
             elif next is False:
                 screen = Flags.HOME
+            elif next == 'Sessoes':
+                screen = Flags.MOVIES
             else:
                 cart.removeAllTickets(next[1])
                 for ticket in next[0]:
