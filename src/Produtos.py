@@ -16,7 +16,7 @@ class Produtos():
 
         layoutProducts = []
         for product in productList:
-            if not isinstance(product, Sessoes):
+            if not isinstance(product, Sessoes) and product.getAmount() > 0:
                 self.productAdd = product
                 layoutProducts.append([sg.Text(product.getName(), font = Util.getFont),
                                        sg.Push(),
@@ -59,7 +59,7 @@ class Produtos():
 
                 if(event == '+'):
                     item = carrinho.getItem(x.getId())
-                    if item != None and item.getAmount() + 1 > x .getAmount():
+                    if item != None and item.getAmount() + 1 > x .getAmount() or 1 > x.getAmount():
                         sg.PopupError("Item não disponível em estoque")
                     else:
                         carrinho.addProduct(Item(x.getName(), x.getId(), x.getPrice(), 1, x.getImagePath()))
