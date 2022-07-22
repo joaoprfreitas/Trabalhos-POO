@@ -1,13 +1,10 @@
-import code
-from math import prod
 import PySimpleGUI as sg
 from Util import *
 from Item import *
-from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import mm, inch
 from reportlab.pdfgen import canvas
-from reportlab.platypus import Image, Paragraph, Table, Frame
+from reportlab.platypus import Paragraph, Table, Frame
 from reportlab_qrcode import QRCodeImage
 
 from Sessoes import *
@@ -23,34 +20,36 @@ class Carrinho():
         self.productList = []
         self.totalValue = 0
 
+
     def cartLayout(self):
         'Cria o layout do carrinho'
         self.layout = []
+
+        self.totalValue = 0
 
         # Cabeçalho
         self.layout.append([sg.Text('Carrinho', font=Util.getTitleFont(), justification='center')])
         self.layout.append([sg.Text('\n')])
 
-        # Cabeçalho da tabela
-        self.layout.append([sg.Text('Produto', font=Util.getFont(), justification='center'),
-                            sg.Text('Valor', font=Util.getFont(), justification='center'),
-                            sg.Text('Quantidade', font=Util.getFont(), justification='center'),
-                            sg.Text('Subtotal', font=Util.getFont(), justification='center')
-                            ])
-        
-        self.totalValue = 0
-        
-        # Lista de produtos
+        headings = ['Produto', 'Valor', 'Quantidade', 'Subtotal']
+
+        list = []
+
         for product in self.productList:
             if isinstance(product, Item):
                 subTotal = product.getPrice() * product.getAmount()
-                self.layout.append([sg.Text(product.getName(), font=Util.getFont(), justification='center'),
-                                    sg.Text('{:.2f}'.format(product.getPrice()), font=Util.getFont(), justification='center'),
-                                    sg.Text(product.getAmount(), font=Util.getFont(), justification='center'),
-                                    sg.Text('{:.2f}'.format(subTotal), font=Util.getFont(), justification='center')
-                                    ])
-
+                list.append([product.getName(), '{:.2f}'.format(product.getPrice()), str(product.getAmount()), '{:.2f}'.format(subTotal)])
                 self.totalValue += subTotal
+
+        self.layout.append([sg.Table(values=list, 
+                                     headings=headings, 
+                                     max_col_width=35,
+                                     auto_size_columns=True,
+                                     display_row_numbers=False,
+                                     justification='right',
+                                     num_rows=10,
+                                     key='-TABLE-',
+                                     row_height=35)])
 
         # Total
         self.layout.append([sg.Text('\n'),
@@ -73,39 +72,35 @@ class Carrinho():
         self.layout = []
 
         # Cabeçalho
-        self.layout.append([sg.Text('Ticket', font=Util.getTitleFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())])
+        self.layout.append([sg.Text('Ticket', font=Util.getTitleFont(), justification='center')])
+        self.layout.append([sg.Text('\n')])
 
-        # Cabeçalho da tabela
-        self.layout.append([sg.Text('Produto', font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
-                            sg.Text('Valor', font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
-                            sg.Text('Quantidade', font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
-                            sg.Text('Subtotal', font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())
-                            ])
+        headings = ['Produto', 'Valor', 'Quantidade', 'Subtotal']
 
-        self.totalValue = 0
+        list = []
 
-        # Lista de produtos
-        whiteBackground = True
         for product in self.productList:
             if isinstance(product, Item):
-                backgroundColor = '#ffffff'
-                if not whiteBackground: backgroundColor = Util.fontBackgroundColor()
-
-                whiteBackground = not whiteBackground
-
                 subTotal = product.getPrice() * product.getAmount()
-                self.layout.append([sg.Text(product.getName(), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor()),
-                                    sg.Text('{:.2f}'.format(product.getPrice()), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor()),
-                                    sg.Text(str(product.getAmount()), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor()),
-                                    sg.Text('{:.2f}'.format(subTotal), font=Util.getFont(), justification='center', background_color=backgroundColor, text_color=Util.fontColor())
-                                    ])
-
+                list.append([product.getName(), '{:.2f}'.format(product.getPrice()), str(product.getAmount()), '{:.2f}'.format(subTotal)])
                 self.totalValue += subTotal
 
+        self.layout.append([sg.Table(values=list, 
+                                     headings=headings, 
+                                     max_col_width=35,
+                                     auto_size_columns=True,
+                                     display_row_numbers=False,
+                                     justification='right',
+                                     num_rows=10,
+                                     key='-TABLE-',
+                                     row_height=35)])
+
         # Total
-        self.layout.append([sg.Text('Total:', font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor()),
-                            sg.Text('{:.2f}'.format(self.totalValue), font=Util.getFont(), justification='center', background_color=Util.fontBackgroundColor(), text_color=Util.fontColor())
+        self.layout.append([sg.Text('Total:', font=Util.getFont(), justification='center'),
+                            sg.Text('{:.2f}'.format(self.totalValue), font=Util.getFont(), justification='center')
                             ])
+
+        self.layout.append([sg.Text('\n')])
 
         # Botões
         self.layout.append([sg.Button('Voltar', size=(10, 1), font=Util.getFont()),
