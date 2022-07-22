@@ -86,6 +86,9 @@ class Estoque():
 
         for movie in self.products:
             if isinstance(movie, Sessoes):
+                
+                movie.getCadeiras().confirmar(False)
+
                 colunaTexto = sg.Column([[sg.Text(movie.getName(), font=Util.getFont())],
                                          [sg.Text('\n')],
                                          [sg.Text('Preço: R${:.2f}'.format(movie.getPrice()), font=('Ubuntu', 12, 'bold'))],
@@ -145,6 +148,9 @@ class Estoque():
 
                     if tickets == None:
                         return None
+
+                    elif tickets == False:
+                        return 'Sessoes'
                         
                     listTicket = []
                     for ticket in tickets:
