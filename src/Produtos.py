@@ -4,9 +4,10 @@ from Item import *
 from Estoque import *
 from Carrinho import *
  
-class Produtos():  
-
+class Produtos():
     def defProductsLayout(self, estoque):
+        'Cria o layout da tela de produtos'
+
         productList = estoque.getProducstList()
         self.layoutProdutos = [
             [sg.Text("Produtos disponíveis", font=Util.getTitleFont())],
@@ -36,9 +37,8 @@ class Produtos():
                                     sg.Button("PRÓXIMO", key='next', font=Util.bigButtonFont())])
     
     def telaProdutos(self, estoque, carrinho: Carrinho):
+        'Inicia a tela de produtos'
         self.tela = sg.Window('Produtos', self.layoutProdutos, size=Util.screenSize(), element_justification='center') 
-
-        listProducts = carrinho.getProductList()
 
         while True:
             event, values = self.tela.read()
@@ -65,8 +65,3 @@ class Produtos():
                         carrinho.addProduct(Item(x.getName(), x.getId(), x.getPrice(), 1, x.getImagePath()))
                 else:
                         carrinho.addProduct(Item(x.getName(), x.getId(), x.getPrice(), 1, x.getImagePath()), 1)
-if __name__ == '__main__':
-    ini = Produtos()
-    ini.telaProdutos()
-
-    

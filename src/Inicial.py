@@ -3,6 +3,7 @@ from Util import *
  
 class Inicial():
     'Cria a tela home do sistema'
+
     def __init__(self):
         'Define o layout da tela'
         
@@ -36,7 +37,3 @@ class Inicial():
                 self.tela.close()
                 return False
             
-if __name__ == '__main__':
-    ini = Inicial()
-    ini.TelaInicial()
-    

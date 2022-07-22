@@ -108,7 +108,3 @@ class PaymentScreen():
             elif self.button == 'Voltar':
                 self.screen.close()
                 return False
-
-if __name__ == '__main__':
-    pScreen = PaymentScreen()
-    pScreen.createScreen()

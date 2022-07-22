@@ -17,12 +17,10 @@ class Flags(Enum):
     CART = 4
     PAYMENT = 5
     QRCODE = 6
-
     LOGIN = 7
     ADMIN = 8
     ADMIN_SESSION = 9
     ADMIN_FOOD = 10
-
     FINISH = 11
 
 if __name__ == '__main__':
@@ -103,10 +101,9 @@ if __name__ == '__main__':
 
             if next is None:
                 screen = Flags.FINISH
-            elif next:
-                screen = Flags.HOME
             else:
-                screen = Flags.PAYMENT
+                screen = Flags.HOME
+                
         elif screen is Flags.LOGIN:
             loginScreen = Login()
             next = loginScreen.createScreen()
@@ -129,6 +126,7 @@ if __name__ == '__main__':
                 screen = Flags.ADMIN_SESSION
             else:
                 screen = Flags.HOME
+
         elif screen is Flags.ADMIN_FOOD:
             next = stock.createScreenFood()
             if next is None:
@@ -137,6 +135,7 @@ if __name__ == '__main__':
                 screen = Flags.HOME
             else:
                 screen = Flags.ADMIN
+
         elif screen is Flags.ADMIN_SESSION:
             next = stock.createScreenSession()
             if next is None:
@@ -145,6 +144,7 @@ if __name__ == '__main__':
                 screen = Flags.HOME
             else:
                 screen = Flags.ADMIN
+
         elif screen is Flags.FINISH:
             break
 

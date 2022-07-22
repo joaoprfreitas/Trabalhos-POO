@@ -1,6 +1,8 @@
 class Item():
 
     def __init__(self, name: str, id: int, price: float, store: int, imagePath: str):
+        'Construtor do item'
+
         self.name = name
         if id == None:
             raise Exception("Id can't be none")

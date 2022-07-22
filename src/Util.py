@@ -1,4 +1,5 @@
 class Util:
+    'Possui algumas constantes utilizadas em diversos lugares'
 
     @staticmethod
     def theme():

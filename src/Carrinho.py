@@ -66,7 +66,7 @@ class Carrinho():
         sg.theme(Util.theme())
         self.screen = sg.Window('Carrinho', self.layout, size=Util.screenSize(), element_justification='center')
 
-    def qrCodeLayout(self): #Não testado
+    def qrCodeLayout(self):
         'Cria o layout do qr code'
 
         self.layout = []
@@ -187,6 +187,7 @@ class Carrinho():
             elif self.button == 'Voltar':
                 self.screen.close()
                 return False
+
     def createScreenQrCode(self):
         'Inicia a tela de carrinho, retornando True se o usuário confirmar, '
         'False se o usuário cancelar o pagamento e None se o usuário encerrar o programa'
@@ -202,6 +203,7 @@ class Carrinho():
             elif self.button == 'Voltar':
                 self.screen.close()
                 return False
+
     def createPdf(self):
         PAGE_SIZE = (8.27*inch, 11.69*inch)
         width, height = PAGE_SIZE
@@ -256,9 +258,3 @@ class Carrinho():
     def coord(self, x, y, height, unit=1):
         x, y = x * unit, height -  y * unit
         return x, y
-
-if __name__ == '__main__':
-    cart = Carrinho()
-    cart.addProduct(Item("teste", 1, 1.9, 1, 'stasdas'))
-    cart.addProduct(Item("tesdasste", 2, 1.9, 1, 'stasdas'))
-    cart.createPdf()

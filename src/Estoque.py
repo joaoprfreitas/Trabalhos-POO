@@ -6,7 +6,11 @@ from Ingresso import *
 
 class Estoque():
     products = []
+
     def __init__(self):
+        'Construtor do estoque'
+
+        # Define alguns objetos padrões
         self.addSession("Meu Malvado Favorito 1", 17.50, "Dublado", "12:00", "../img/mf1.png")
         self.addSession("Meu Malvado Favorito 2", 17.50, "Dublado", "15:00", "../img/mf2.png")
         self.addFood("Pipoca grande", 9.30, 100, 'noImage')
@@ -14,12 +18,16 @@ class Estoque():
         self.addFood("Pipoca pequena", 5.30, 100, 'noImage')
 
     def searchProduct(self, id:int):
+        'Busca um produto pelo seu id'
+
         if  type(id) != int:
             raise Exception("Id must be integer")
         item = filter(lambda p: p.id == id, self.products)
         return item
 
     def getLastId(self):
+        'Retorna o id do último produto cadastrado'
+
         size = len(self.products)
         if size == 0:
             return 0
@@ -27,9 +35,12 @@ class Estoque():
         return item.id
 
     def getProducstList(self):
+        'Retorna uma lista de produtos'
         return self.products
 
     def getLayoutFood(self):
+        'Retorna o layout da tela de comidas'
+
         sg.theme(Util.theme())
         layout = [
             [sg.Text('Cadastro de alimentos',size=(30,2),auto_size_text=True, justification='center', font=Util.getTitleFont())],
@@ -44,6 +55,8 @@ class Estoque():
         return layout
 
     def getLayoutSession(self):
+        'Retorna o layout da tela de sessões'
+
         sg.theme(Util.theme())
         layout = [
             [sg.Text('Cadastro de sessões', size=(30,2),auto_size_text=True, justification='center', font=Util.getTitleFont())],
@@ -59,16 +72,22 @@ class Estoque():
         return layout
         
     def addFood(self, name, price, store, image):
+        'Insere um alimento no estoque'
+
         id = self.getLastId()
         id = id + 1
         self.products.append(Item(name, id, price, store, image))
 
     def addSession(self, name, price, type, dateTime, image):
+        'Insere uma sessão no estoque'
+
         id = self.getLastId()
         id = id + 1
         self.products.append(Sessoes(name, id, price, dateTime, type, image))
 
     def sell(self, item):
+        'Vende um item do estoque'
+
         if isinstance(item, Ingresso):
             movie = list(self.searchProduct(item.getSessao()))[0]
             chairs = movie.getCadeiras()
@@ -78,6 +97,8 @@ class Estoque():
             product.sell(item.getAmount())
 
     def getSessionListLayout(self):
+        'Retorna o layout da tela de sessões'
+
         sg.theme(Util.theme())
         layout = [[sg.Push(), sg.Text('', key='esquerda')]]
 
@@ -113,6 +134,8 @@ class Estoque():
         
 
     def createScreenSessionsList(self):
+        'Cria a tela de sessões'
+
         tela = sg.Window('Sessões Disponíveis', self.getSessionListLayout(), size=Util.screenSize(), element_justification='center', font=Util.getFont()) 
         index = 0
 
@@ -157,10 +180,9 @@ class Estoque():
                         chair = str(ticket[0]) + str(ticket[1])
                         listTicket.append(Ingresso(item.getName(), chair, item.getId(), item.getPrice()))
                 return listTicket, item.getId()
-
-
-                
+         
     def createScreen(self):
+        'Cria a tela de cadastro de produtos'
         layout = [
             [sg.Text("O que você deseja cadastrar?", size=(30,2), auto_size_text=True, justification='center', font=Util.getTitleFont())],
             [sg.Text('\n\n\n\n\n')],
@@ -169,6 +191,7 @@ class Estoque():
              sg.Button(button_text='Sessões', button_color=Util.getButtonColor(), key='sessions', font=Util.bigButtonFont())
             ]
         ]
+
         sg.theme(Util.theme())
         window = sg.Window('Tela de cadastro', layout,size=Util.screenSize(), element_justification='c', font=Util.getFont())
         
@@ -188,6 +211,8 @@ class Estoque():
                 return False    
         
     def createScreenFood(self):
+        'Cria a tela de cadastro de alimentos'
+
         layout = self.getLayoutFood()
         window = sg.Window('Tela de cadastro', layout,size=Util.screenSize(), element_justification='c')
         while True:
@@ -260,6 +285,8 @@ class Estoque():
                     sg.PopupError(error.args)
 
     def createScreenSession(self):
+        'Cria a tela de cadastro de sessões'
+
         layout = self.getLayoutSession()
         window = sg.Window('Tela de cadastro', layout,size=Util.screenSize(), element_justification='c')
         while True:
@@ -341,6 +368,3 @@ class Estoque():
                 except Exception as error:
                     sg.PopupError(error.args)
             
-if __name__ == '__main__':
-    estoque = Estoque()
-    estoque.createScreenSessionsList()

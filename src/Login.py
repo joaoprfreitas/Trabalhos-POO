@@ -53,7 +53,3 @@ class Login:
             elif event == '-BTT-VOLTAR-':
                 window.close()
                 return False
-
-if __name__ == '__main__':
-    log = Login()
-    log.createScreen()
