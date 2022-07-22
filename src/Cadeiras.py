@@ -69,6 +69,11 @@ class Cadeiras:
                     window[event].update(image_data=self.arrayCadeiras[self.matriz_estados[linha][coluna]], image_subsample=3)
                     window['-TOTAL-'].update('Total selecionado: {}'.format(self.totalSelecionado))
 
+            elif event == '-VOLTAR-':
+                window.close()
+                self.confirmar(False)
+                return False
+
         lista = []
 
         for i in range(self.total):
