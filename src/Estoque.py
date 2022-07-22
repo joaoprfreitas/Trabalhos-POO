@@ -9,7 +9,7 @@ class Estoque():
     def __init__(self):
         self.addSession("Meu Malvado Favorito 1", 17.50, "Dublado", "12:00", "../img/mf1.png")
         self.addSession("Meu Malvado Favorito 2", 17.50, "Dublado", "15:00", "../img/mf2.png")
-        self.addFood("Pipoca grande", 10.30, 100, 'noImage')
+        self.addFood("Pipoca grande", 9.30, 100, 'noImage')
         self.addFood("Pipoca média", 7.30, 100, 'noImage')
         self.addFood("Pipoca pequena", 5.30, 100, 'noImage')
 

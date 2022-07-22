@@ -18,6 +18,7 @@ class Produtos():
             if not isinstance(product, Sessoes):
                 self.productAdd = product
                 layoutProducts.append([sg.Text(product.getName(), font = Util.getFont),
+                                       sg.Push(),
                                        sg.Text("R$:{:.2f}".format(product.getPrice())),
                                        sg.Button("+", key="+ "+ str(product.getId()), size=(2, 1)),
                                        sg.Button("-", key="- "+ str(product.getId()), size=(2, 1))
